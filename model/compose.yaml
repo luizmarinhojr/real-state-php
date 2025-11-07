@@ -1,0 +1,17 @@
+services:
+  db:
+    image: mysql:8.0.44-debian
+    container_name: mysql_real_state
+    restart: always
+    environment:
+      MYSQL_DATABASE: real_state 
+      MYSQL_ROOT_PASSWORD: myfirstpassword
+      
+    ports:
+      - "3306:3306"
+      
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:

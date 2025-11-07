@@ -1,0 +1,11 @@
+:root {
+    --primary-color: rgb(55, 55, 255);
+    --secundary-color: rgb(252, 252, 252);
+    --terciary-color: rgb(219, 216, 0);
+    --dark: rgb(15, 15, 15);
+    --white-background: rgb(245, 245, 245);
+    --default-width-screen: 1300px;
+    --white: white;
+    --success: rgb(9, 146, 9);
+    --error: rgb(206, 0, 0);
+}
