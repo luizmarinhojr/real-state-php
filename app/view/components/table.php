@@ -1,7 +1,7 @@
 <div class="container">
     <h1>Clientes</h1>
     <div class="actions">
-        <a href="./create/" class="btn-actions new">+ Novo Cliente</a>
+        <a href="./create" class="btn-actions new">+ Novo Cliente</a>
         <a href="./customer" class="btn-actions delete">Excluir Cliente</a>
     </div>
     <table>

@@ -9,13 +9,13 @@
         $customerController = new CustomerController();
 
         switch ($requestUri) {
-            case '/real_state/public/':
+            case '/':
                 $customerController->index();
                 break;
-            case '/real_state/public/create/':
+            case '/create':
                 $customerController->create();
                 break;
             default:
-                echo "<h1>Error 404 aqui</h1>";
+                echo "<h1>Error 404</h1>";
         }
 ?>
