@@ -1,7 +1,9 @@
 <?php
 // require_once ROOT_PATH . 'config/database.php';
 // require_once ROOT_PATH . 'app/model/CustomerModel.php';
-require_once '../../config/database.php';
+namespace App\Repository;
+
+use mysqli;
 
 interface Crud {
     public function fetchAll(string $query): array;
@@ -23,32 +25,32 @@ class Repository implements Crud {
     }
 
     public function fetch(string $query, int $id): ?object {
-
+        return null;
     }
 
     public function update(string $query, object $entity): bool {
-
+        return false;
     }
     
     public function delete(string $query, int $id): bool{
-
+        return false;
     }
 }
 
-$repo = new Repository(Database::connect());
-$result = $repo->fetchAll("SELECT * FROM customers;");
+// $repo = new Repository(Database::connect());
+// $result = $repo->fetchAll("SELECT * FROM customers;");
 
-if (!empty($result)) {
-    echo "<h2>Resultados da Consulta:</h2>";
-    echo "<ul>";
+// if (!empty($result)) {
+//     echo "<h2>Resultados da Consulta:</h2>";
+//     echo "<ul>";
     
-    // Itera sobre CADA LINHA (que é um array associativo)
-    foreach ($result as $row) {
-        // Acessa as colunas específicas do array $row
-        echo "<li>ID: " . $row['id'] . ", Nome: " . $row['name'] . ", Email: " . $row['email'] . "</li>";
-    }
+//     // Itera sobre CADA LINHA (que é um array associativo)
+//     foreach ($result as $row) {
+//         // Acessa as colunas específicas do array $row
+//         echo "<li>ID: " . $row['id'] . ", Nome: " . $row['name'] . ", Email: " . $row['email'] . "</li>";
+//     }
     
-    echo "</ul>";
-} else {
-    echo "Nenhum resultado encontrado.";
-}
+//     echo "</ul>";
+// } else {
+//     echo "Nenhum resultado encontrado.";
+// }

@@ -1,6 +1,17 @@
 <?php 
-class CustomerController {
-    public function index(): void {
+
+namespace App\Controller;
+
+use App\Usecase\CustomerUsecase;
+
+final class CustomerController {
+    private readonly CustomerUsecase $usecase;
+
+    public function __construct(CustomerUsecase $usecase) {
+        $this->usecase = $usecase;
+    }
+
+    final public function index(): void {
         $customers = [
             [
                 'nome' => 'Maicon',
@@ -21,10 +32,10 @@ class CustomerController {
                 'nasc' => '11/12/1994',
             ],
         ];
-        require_once ROOT_PATH . 'app/view/pages/main.php';
+        require_once ROOT_PATH . 'App/view/pages/main.php';
     }
 
-    public function create(): void {
-        require_once ROOT_PATH . 'app/view/pages/create.php';
+    final public function create(): void {
+        require_once ROOT_PATH . 'App/view/pages/create.php';
     }
 }   

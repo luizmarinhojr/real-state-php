@@ -11,10 +11,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <?php require_once ROOT_PATH . "app/view/components/header.php"; ?>
+    <?php require_once ROOT_PATH . "App/view/components/header.php"; ?>
     <main>
-        <?php require_once ROOT_PATH . "app/view/components/table.php"; ?>
+        <?php require_once ROOT_PATH . "App/view/components/table.php"; ?>
     </main>
-    <?php require_once ROOT_PATH . "app/view/components/footer.php"; ?>
+    <?php require_once ROOT_PATH . "App/view/components/footer.php"; ?>
 </body>
 </html>
