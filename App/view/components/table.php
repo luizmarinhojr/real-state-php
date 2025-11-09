@@ -7,6 +7,7 @@
     <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Nome</th>
                 <th>Rua</th>
                 <th>Número</th>
@@ -17,17 +18,25 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($customers as $customer): ?>
+            <?php if (empty($customers)): ?>
                 <tr>
-                    <td><?= $customer['nome'] ?></td>
-                    <td><?= $customer['rua'] ?></td>
-                    <td><?= $customer['numero'] ?></td>
-                    <td><?= $customer['cep'] ?></td>
-                    <td><?= $customer['celular'] ?></td>
-                    <td><?= $customer['email'] ?></td>
-                    <td><?= $customer['nasc'] ?></td>
+                    <td colspan="8">Ainda não há clientes cadastrados</td>
                 </tr>
-            <?php endforeach; ?>
+            
+            <?php else: ?>
+                <?php foreach ($customers as $customer): ?>
+                    <tr>
+                        <td><?= $customer->getId() ?></td>
+                        <td><?= $customer->getName() ?></td>
+                        <td><?= $customer->getAddress()->getStreet() ?></td>
+                        <td><?= $customer->getAddress()->getNumber() ?></td>
+                        <td><?= $customer->getAddress()->getCep() ?></td>
+                        <td><?= $customer->getCellphone() ?></td>
+                        <td><?= $customer->getEmail() ?></td>
+                        <td><?= $customer->getBirthDate() ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif ?>
         </tbody>
     </table>
 </div>

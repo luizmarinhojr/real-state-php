@@ -21,6 +21,7 @@ class Repository implements Crud {
 
     public function fetchAll(string $query): array {
         $result = $this->db->query($query);
+        $this->db->close();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
@@ -36,21 +37,3 @@ class Repository implements Crud {
         return false;
     }
 }
-
-// $repo = new Repository(Database::connect());
-// $result = $repo->fetchAll("SELECT * FROM customers;");
-
-// if (!empty($result)) {
-//     echo "<h2>Resultados da Consulta:</h2>";
-//     echo "<ul>";
-    
-//     // Itera sobre CADA LINHA (que é um array associativo)
-//     foreach ($result as $row) {
-//         // Acessa as colunas específicas do array $row
-//         echo "<li>ID: " . $row['id'] . ", Nome: " . $row['name'] . ", Email: " . $row['email'] . "</li>";
-//     }
-    
-//     echo "</ul>";
-// } else {
-//     echo "Nenhum resultado encontrado.";
-// }
