@@ -2,36 +2,54 @@
 
 namespace App\Usecase;
 
-use App\Model\AddressModel;
+use App\Dto\AddressDto;
+use App\Dto\CustomerDto;
+use App\Repository\CustomerRepository;
 use App\Model\CustomerModel;
-use App\Repository\Repository;
 
 final class CustomerUsecase {
-    private readonly Repository $repo;
+    private readonly CustomerRepository $repo;
 
-    public function __construct(Repository $repo) {
+    public function __construct(CustomerRepository $repo) {
         $this->repo = $repo;
     }
 
-    /**
-     * Recupera todos os clientes com seus endereços.
-     * @return CustomerModel[] Deve retornar um array de objetos CustomerModel.
-     */
-    public function getAll():?array {
-        $query = "SELECT c.id, c.name, c.birth_date, c.cellphone, c.email, a.neighborhood, a.city 
-                FROM customers c 
-                LEFT JOIN addresses a ON c.id = a.id_customer;";
-        $result = $this->repo->fetchAll($query);
+    public function index():?array {
+        $result = $this->repo->fetchAll();
         if (!empty($result)) {
-            /** @var CustomerModel[] $customers */
-            $customers = [];
-            foreach ($result as $row) {
-                $address = new AddressModel(null, null, null, null, $row['neighborhood'], $row['city'], null);
-                $customer = new CustomerModel($row['id'], $row['name'], $row['birth_date'], $row['email'], $row['cellphone'], $address);
-                $customers[] = $customer;
-            }
+            $customers = $this->convertToArrayDto($result);
             return $customers;
         }
         return null;
+    }
+
+    public function create(CustomerDto $customer): ?CustomerDto { 
+        return null;
+    }
+
+    public function getById(int $id): ?CustomerDto {
+        $result = $this->repo->fetch($id);
+        if (!empty($result)) {
+            return $this->convertToDto($result);
+        }
+        return null;
+    }
+
+    private function convertToDto(CustomerModel $customer): CustomerDto {
+        return new CustomerDto($customer->getId(), $customer->getName(), $customer->getBirthDate(), 
+                $customer->getEmail(), $customer->getCellphone(), new AddressDto(null, $customer->getAddress()->getStreet(),
+                $customer->getAddress()->getNumber(), $customer->getAddress()->getComplement(), 
+                $customer->getAddress()->getNeighborhood(), $customer->getAddress()->getCity(), $customer->getAddress()->getCep()));
+    }
+
+    private function convertToArrayDto(array $result): array {
+        $customers = [];
+        foreach ($result as $customer) {
+            $customers[] = new CustomerDto($customer->getId(), $customer->getName(), $customer->getBirthDate(), 
+            $customer->getEmail(), $customer->getCellphone(), new AddressDto(null, $customer->getAddress()->getStreet(),
+            $customer->getAddress()->getNumber(), $customer->getAddress()->getComplement(), 
+            $customer->getAddress()->getNeighborhood(), $customer->getAddress()->getCity(), $customer->getAddress()->getCep()));
+        }
+        return $customers;
     }
 }

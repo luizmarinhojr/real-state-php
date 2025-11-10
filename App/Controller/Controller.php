@@ -5,7 +5,7 @@ namespace App\Controller;
 final class Controller {
     public static function initCustomer(): CustomerController {
         $db = \Config\Database::connect();
-        $repo = new \App\Repository\Repository($db);
+        $repo = new \App\Repository\CustomerRepository($db);
         $usecase = new \App\Usecase\CustomerUsecase($repo);
         return new CustomerController($usecase);
     }

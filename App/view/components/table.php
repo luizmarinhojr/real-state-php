@@ -7,7 +7,6 @@
     <table>
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nome</th>
                 <th>Rua</th>
                 <th>Número</th>
@@ -15,6 +14,7 @@
                 <th>Celular</th>
                 <th>E-mail</th>
                 <th>Nasc.</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -26,7 +26,6 @@
             <?php else: ?>
                 <?php foreach ($customers as $customer): ?>
                     <tr>
-                        <td><?= $customer->getId() ?></td>
                         <td><?= $customer->getName() ?></td>
                         <td><?= $customer->getAddress()->getStreet() ?></td>
                         <td><?= $customer->getAddress()->getNumber() ?></td>
@@ -34,6 +33,7 @@
                         <td><?= $customer->getCellphone() ?></td>
                         <td><?= $customer->getEmail() ?></td>
                         <td><?= $customer->getBirthDate() ?></td>
+                        <td><a class="btn-table info" href="<?= '/create?id=' . $customer->getId() ?>">Detalhar</a></td>
                     </tr>
                 <?php endforeach; ?>
             <?php endif ?>
