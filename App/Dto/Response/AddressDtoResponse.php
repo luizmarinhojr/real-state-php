@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Model;
+namespace App\Dto\Response;
 
 use DateTimeImmutable;
 
-class AddressModel {
+final class AddressDtoResponse {
     private ?int $id;
-    private string $street;
-    private int $number;
+    private ?string $street;
+    private ?int $number;
     private ?string $complement;
-    private string $neighborhood;
-    private string $city;
-    private string $state;
-    private string $cep;
+    private ?string $neighborhood;
+    private ?string $city;
+    private ?string $cep;
+    private ?string $state;
     private ?bool $active;
-    private readonly DateTimeImmutable $createdAt;
-    private ?DateTimeImmutable $modifiedAt;
-    private ?DateTimeImmutable $deletedAt;
-    
-    public function __construct(?int $id, string $street, int $number, ?string $complement, string $neighborhood, string $city, 
-            string $cep, string $state, ?bool $active, ?DateTimeImmutable $createdAt, ?DateTimeImmutable $modifiedAt = null, 
-            ?DateTimeImmutable $deletedAt = null) {
+    private readonly ?string $createdAt;
+    private ?string $modifiedAt;
+    private ?string $deletedAt;
+
+    public function __construct(?int $id = null, ?string $street = null, ?int $number = null, ?string $complement = null, ?string $neighborhood = null, 
+            ?string $city = null, ?string $cep = null, ?string $state = null, ?bool $active = null, ?DateTimeImmutable $createdAt = null, 
+            ?DateTimeImmutable $modifiedAt = null, ?DateTimeImmutable $deletedAt = null) {
         $this->setId($id);
         $this->setStreet($street);
         $this->setNumber($number);
@@ -30,9 +30,9 @@ class AddressModel {
         $this->setState($state);
         $this->setCep($cep);
         $this->setActive($active);
+        $this->setCreatedAt($createdAt);
         $this->setModifiedAt($modifiedAt);
         $this->setDeletedAt($deletedAt);
-        $this->createdAt = $createdAt ?? new DateTimeImmutable('now');
     }
 
     public function getId(): ?int {
@@ -63,7 +63,7 @@ class AddressModel {
         return $this->cep;
     }
 
-    public function getState(): string {
+    public function getState(): ?string {
         return $this->state;
     }
 
@@ -107,7 +107,7 @@ class AddressModel {
         $this->cep = $cep;
     }
 
-    public function setState(string $state): void {
+    public function setState(?string $state): void {
         $this->state = $state;
     }
 
@@ -115,11 +115,15 @@ class AddressModel {
         $this->active = $active;
     }
 
+    public function setCreatedAt(?DateTimeImmutable $createdAt): void {
+        $this->createdAt = !$createdAt ?? $createdAt->format('Y-m-d H:i:s');
+    }
+
     public function setModifiedAt(?DateTimeImmutable $modifiedAt): void {
-        $this->modifiedAt = $modifiedAt;
+        $this->modifiedAt = !$modifiedAt ?? $modifiedAt->format('Y-m-d H:i:s');
     }
 
     public function setDeletedAt(?DateTimeImmutable $deletedAt): void {
-        $this->deletedAt = $deletedAt;
+        $this->deletedAt = !$deletedAt ?? $deletedAt->format('Y-m-d H:i:s');
     }
 }

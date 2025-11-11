@@ -14,9 +14,15 @@
         case '/':
             Controller::initCustomer()->index();
             break;
+
         case '/create':
-            Controller::initCustomer()->create();
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                Controller::initCustomer()->create();
+            } else {
+                Controller::initCustomer()->detail();
+            }
             break;
+            
         default:
             Controller::initHandlerError()->error404();
     }

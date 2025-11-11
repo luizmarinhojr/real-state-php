@@ -1,6 +1,8 @@
 <?php
 namespace App\Repository;
 
+use App\Dto\Response\AddressDtoResponse;
+use App\Dto\Response\CustomerDtoResponse;
 use App\Model\AddressModel;
 use App\Model\CustomerModel;
 
@@ -15,7 +17,7 @@ class CustomerRepository implements IRepository {
     }
 
     public function fetchAll():?array {
-        $query = "SELECT c.id, c.name, c.birth_date, c.cellphone, c.email, a.neighborhood, a.city 
+        $query = "SELECT c.id, c.first_name, c.last_name, c.birth_date, c.cellphone, c.email, a.neighborhood, a.city 
                 FROM customers c 
                 LEFT JOIN addresses a ON c.id = a.id_customer;";
         $result = $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
@@ -23,8 +25,8 @@ class CustomerRepository implements IRepository {
         if (!empty($result)) {
             $customers = [];
             foreach ($result as $row) {
-                $address = new AddressModel(null, null, null, null, $row['neighborhood'], $row['city'], null);
-                $customer = new CustomerModel($row['id'], $row['name'], $row['birth_date'], 
+                $address = new AddressDtoResponse(null, null,null,null,$row['neighborhood'],$row['city']);
+                $customer = new CustomerDtoResponse($row['id'], $row['first_name'], $row['last_name'], $row['birth_date'], 
                         $row['email'], $row['cellphone'], $address);
                 $customers[] = $customer;
             }
@@ -34,7 +36,7 @@ class CustomerRepository implements IRepository {
     }
 
     public function fetch(int $id): ?object {
-        $query = "SELECT c.id, c.name, c.birth_date, c.cellphone, c.email, a.neighborhood, a.city 
+        $query = "SELECT c.id, c.first_name, c.last_name, c.birth_date, c.cellphone, c.email, a.neighborhood, a.city 
                 FROM customers c 
                 LEFT JOIN addresses a ON c.id = a.id_customer
                 WHERE c.id = ?;";
@@ -53,9 +55,9 @@ class CustomerRepository implements IRepository {
             return null; 
         }
         $row = $result->fetch_assoc();
-        $address = new AddressModel(null, null, null, null, $row['neighborhood'], $row['city'], null);
-        $customer = new CustomerModel($row['id'], $row['name'], $row['birth_date'], $row['email'], 
-                    $row['cellphone'], $address);
+        $address = new AddressDtoResponse(null, null,null,null,$row['neighborhood'],$row['city']);
+        $customer = new CustomerDtoResponse($row['id'], $row['first_name'], $row['last_name'], $row['birth_date'], 
+                $row['email'], $row['cellphone'], $address);
         $stmt->close();
         return $customer;
     }

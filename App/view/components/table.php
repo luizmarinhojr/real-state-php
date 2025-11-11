@@ -8,9 +8,9 @@
         <thead>
             <tr>
                 <th>Nome</th>
-                <th>Rua</th>
-                <th>Número</th>
-                <th>CEP</th>
+                <th>Sobrenome</th>
+                <th>Bairro</th>
+                <th>Cidade</th>
                 <th>Celular</th>
                 <th>E-mail</th>
                 <th>Nasc.</th>
@@ -26,10 +26,10 @@
             <?php else: ?>
                 <?php foreach ($customers as $customer): ?>
                     <tr>
-                        <td><?= $customer->getName() ?></td>
-                        <td><?= $customer->getAddress()->getStreet() ?></td>
-                        <td><?= $customer->getAddress()->getNumber() ?></td>
-                        <td><?= $customer->getAddress()->getCep() ?></td>
+                        <td><?= $customer->getFirstName() ?></td>
+                        <td><?= $customer->getLastName() ?></td>
+                        <td><?= $customer->getAddress()->getNeighborhood() ?></td>
+                        <td><?= $customer->getAddress()->getCity() ?></td>
                         <td><?= $customer->getCellphone() ?></td>
                         <td><?= $customer->getEmail() ?></td>
                         <td><?= $customer->getBirthDate() ?></td>

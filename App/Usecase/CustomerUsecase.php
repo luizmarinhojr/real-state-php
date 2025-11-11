@@ -2,8 +2,9 @@
 
 namespace App\Usecase;
 
-use App\Dto\AddressDto;
-use App\Dto\CustomerDto;
+use App\Dto\Request\CustomerDtoRequest;
+use App\Dto\Response\CustomerDtoResponse;
+use App\Dto\Response\AddressDtoResponse;
 use App\Repository\CustomerRepository;
 use App\Model\CustomerModel;
 
@@ -17,38 +18,39 @@ final class CustomerUsecase {
     public function index():?array {
         $result = $this->repo->fetchAll();
         if (!empty($result)) {
-            $customers = $this->convertToArrayDto($result);
-            return $customers;
+            return $result;
         }
         return null;
     }
 
-    public function create(CustomerDto $customer): ?CustomerDto { 
+    public function create(CustomerDtoRequest $customer): ?CustomerDtoResponse { 
         return null;
     }
 
-    public function getById(int $id): ?CustomerDto {
+    public function getById(int $id): ?CustomerDtoResponse {
         $result = $this->repo->fetch($id);
         if (!empty($result)) {
-            return $this->convertToDto($result);
+            return $result;
         }
         return null;
     }
 
-    private function convertToDto(CustomerModel $customer): CustomerDto {
-        return new CustomerDto($customer->getId(), $customer->getName(), $customer->getBirthDate(), 
-                $customer->getEmail(), $customer->getCellphone(), new AddressDto(null, $customer->getAddress()->getStreet(),
+    private function convertToDtoResponse(CustomerModel $customer): CustomerDtoResponse {
+        return new CustomerDtoResponse($customer->getId(), $customer->getFirstName(), $customer->getLastName(), $customer->getBirthDate(), 
+                $customer->getEmail(), $customer->getCellphone(), new AddressDtoResponse(null, $customer->getAddress()->getStreet(),
                 $customer->getAddress()->getNumber(), $customer->getAddress()->getComplement(), 
-                $customer->getAddress()->getNeighborhood(), $customer->getAddress()->getCity(), $customer->getAddress()->getCep()));
+                $customer->getAddress()->getNeighborhood(), $customer->getAddress()->getCity(), $customer->getAddress()->getCep(),
+            $customer->getAddress()->getState()));
     }
 
-    private function convertToArrayDto(array $result): array {
+    private function convertToArrayDtoResponse(array $result): array {
         $customers = [];
         foreach ($result as $customer) {
-            $customers[] = new CustomerDto($customer->getId(), $customer->getName(), $customer->getBirthDate(), 
-            $customer->getEmail(), $customer->getCellphone(), new AddressDto(null, $customer->getAddress()->getStreet(),
-            $customer->getAddress()->getNumber(), $customer->getAddress()->getComplement(), 
-            $customer->getAddress()->getNeighborhood(), $customer->getAddress()->getCity(), $customer->getAddress()->getCep()));
+            $customers[] = new CustomerDtoResponse($customer->getId(), $customer->getFirstName(), $customer->getLastName(), $customer->getBirthDate(), 
+                $customer->getEmail(), $customer->getCellphone(), new AddressDtoResponse(null, $customer->getAddress()->getStreet(),
+                $customer->getAddress()->getNumber(), $customer->getAddress()->getComplement(), 
+                $customer->getAddress()->getNeighborhood(), $customer->getAddress()->getCity(), $customer->getAddress()->getCep(),
+            $customer->getAddress()->getState()));
         }
         return $customers;
     }

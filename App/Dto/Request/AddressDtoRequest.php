@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Dto;
+namespace App\Dto\Request;
 
-final class AddressDto {
-    private ?int $id;
-    public ?string $street;
-    public ?int $number;
-    public ?string $complement;
-    public ?string $neighborhood;
-    public ?string $city;
-    public ?string $cep;
+final class AddressDtoRequest {
+    private string $street;
+    private int $number;
+    private ?string $complement;
+    private string $neighborhood;
+    private string $city;
+    private string $state;
+    private string $cep;
 
-    public function __construct(?int $id, ?string $street, ?int $number, ?string $complement, ?string $neighborhood, ?string $city, ?string $cep) {
-        $this->id = $id;
-        $this->street = $street;
-        $this->number = $number;
-        $this->complement = $complement;
-        $this->neighborhood = $neighborhood;
-        $this->city = $city;
-        $this->cep = $cep;
+    public function __construct(string $street, int $number, ?string $complement, string $neighborhood, string $city, string $state, string $cep) {
+        $this->setStreet($street);
+        $this->setNumber($number);
+        $this->setComplement($complement);
+        $this->setNeighborhood($neighborhood);
+        $this->setCity($city);
+        $this->setState($state);
+        $this->setCep($cep);
     }
 
     public function getStreet(): ?string {
@@ -45,6 +45,10 @@ final class AddressDto {
         return $this->cep;
     }
 
+    public function getState(): string {
+        return $this->state;
+    }
+
     public function setStreet(?string $street): void {
         $this->street = $street;
     }
@@ -67,5 +71,9 @@ final class AddressDto {
 
     public function setCep(?string $cep): void {
         $this->cep = $cep;
+    }
+
+    public function setState(string $state): void {
+        $this->state = $state;
     }
 }
