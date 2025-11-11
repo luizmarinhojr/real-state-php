@@ -4,7 +4,8 @@
             <input type="hidden" name="id" value="<?= $customer->getId() ?? "" ?>">
         <fieldset class="customer-data-forms">
             <legend>Dados pessoais</legend>
-            <input type="text" placeholder="Nome do cliente" value="<?= $customer->getFirstName() ?? ""  ?>" name="name" id="name">
+            <input type="text" placeholder="Nome do cliente" value="<?= $customer->getFirstName() ?? ""  ?>" name="first_name" id="first_name">
+            <input type="text" placeholder="Sobrenome do cliente" value="<?= $customer->getLastName() ?? ""  ?>" name="last_name" id="last_name">
             <input type="date" placeholder="Data de Nascimento" value="<?= $customer->getBirthDate() ?? "" ?>" name="birth_date" id="birth_date">
         </fieldset>
         <fieldset class="address-form">
@@ -14,6 +15,7 @@
                     <input type="text" placeholder="Digite o CEP" value="<?= $customer->getAddress()->getCep() ?? "" ?>" name="cep" id="cep">
                     <input type="text" placeholder="Digite a rua" value="<?= $customer->getAddress()->getStreet() ?? "" ?>" name="street" id="street">
                     <input type="text" placeholder="Digite o número" value="<?= $customer->getAddress()->getNumber() ?? "" ?>" name="number" id="number">
+                    <input type="text" placeholder="Digite o complemento" value="<?= $customer->getAddress()->getComplement() ?? "" ?>" name="complement" id="complement">
                 </div>
                 <div class="group-form">
                     <input type="text" placeholder="Digite o bairro" value="<?= $customer->getAddress()->getNeighborhood() ?? "" ?>" name="neighborhood" id="neighborhood">

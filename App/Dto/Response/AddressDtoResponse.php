@@ -19,8 +19,8 @@ final class AddressDtoResponse {
     private ?string $deletedAt;
 
     public function __construct(?int $id = null, ?string $street = null, ?int $number = null, ?string $complement = null, ?string $neighborhood = null, 
-            ?string $city = null, ?string $cep = null, ?string $state = null, ?bool $active = null, ?DateTimeImmutable $createdAt = null, 
-            ?DateTimeImmutable $modifiedAt = null, ?DateTimeImmutable $deletedAt = null) {
+            ?string $city = null, ?string $cep = null, ?string $state = null, ?bool $active = null, ?string $createdAt = null, 
+            ?string $modifiedAt = null, ?string $deletedAt = null) {
         $this->setId($id);
         $this->setStreet($street);
         $this->setNumber($number);
@@ -115,15 +115,15 @@ final class AddressDtoResponse {
         $this->active = $active;
     }
 
-    public function setCreatedAt(?DateTimeImmutable $createdAt): void {
-        $this->createdAt = !$createdAt ?? $createdAt->format('Y-m-d H:i:s');
+    public function setCreatedAt(?string $createdAt): void {
+        $this->createdAt = $createdAt;
     }
 
-    public function setModifiedAt(?DateTimeImmutable $modifiedAt): void {
-        $this->modifiedAt = !$modifiedAt ?? $modifiedAt->format('Y-m-d H:i:s');
+    public function setModifiedAt(?string $modifiedAt): void {
+        $this->modifiedAt = $modifiedAt;
     }
 
-    public function setDeletedAt(?DateTimeImmutable $deletedAt): void {
-        $this->deletedAt = !$deletedAt ?? $deletedAt->format('Y-m-d H:i:s');
+    public function setDeletedAt(?string $deletedAt): void {
+        $this->deletedAt = $deletedAt;
     }
 }

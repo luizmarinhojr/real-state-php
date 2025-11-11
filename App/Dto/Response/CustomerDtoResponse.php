@@ -17,8 +17,8 @@
         private ?string $deletedAt;
 
         public function __construct(?int $id = null, ?string $firstName = null, ?string $lastName = null, ?string $birthDate = null, ?string $email = null, 
-                ?string $cellphone = null, ?AddressDtoResponse $address = null, ?DateTimeImmutable $createdAt = null, ?DateTimeImmutable $modifiedAt = null, 
-                ?DateTimeImmutable $deletedAt = null) {
+                ?string $cellphone = null, ?AddressDtoResponse $address = null, ?string $createdAt = null, ?string $modifiedAt = null, 
+                ?string $deletedAt = null) {
             $this->setId($id);
             $this->setFirstName($firstName);
             $this->setLastName($lastName);
@@ -108,16 +108,16 @@
             $this->address = $address;
         }
 
-        public function setCreatedAt(?DateTimeImmutable $createdAt): void {
-            $this->createdAt = !$createdAt ?? $createdAt->format('Y-m-d H:i:s');
+        public function setCreatedAt(?string $createdAt): void {
+            $this->createdAt = $createdAt;
         }
 
-        public function setModifiedAt(?DateTimeImmutable $modifiedAt): void {
-            $this->modifiedAt = !$modifiedAt ?? $modifiedAt->format('Y-m-d H:i:s');
+        public function setModifiedAt(?string $modifiedAt): void {
+            $this->modifiedAt = $modifiedAt;
         }
 
-        public function setDeletedAt(?DateTimeImmutable $deletedAt): void {
-            $this->deletedAt = !$deletedAt ?? $deletedAt->format('Y-m-d H:i:s');
+        public function setDeletedAt(?string $deletedAt): void {
+            $this->deletedAt = $deletedAt;
         }
         
     }

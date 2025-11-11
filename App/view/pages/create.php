@@ -12,10 +12,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <?php require_once VIEW . "components/header.php"; ?>
+    <?php include VIEW . "components/header.php"; ?>
     <main>
-        <?php require_once VIEW . "components/form.php"; ?>
+        <?php include VIEW . "components/form.php"; ?>
     </main>
-    <?php require_once VIEW . "components/footer.php"; ?>
+    <?php include VIEW . "components/footer.php"; ?>
 </body>
 </html>
