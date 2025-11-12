@@ -13,7 +13,9 @@
 <body>
     <?php include VIEW . "components/header.php"; ?>
     <main>
-        <?php include VIEW . "components/table.php"; ?>
+        <div class="container-fluid">
+            <?php include VIEW . "components/table.php"; ?>
+        </div>
     </main>
     <?php include VIEW . "components/footer.php"; ?>
 </body>

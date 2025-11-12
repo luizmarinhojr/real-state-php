@@ -1,8 +1,8 @@
 <div class="container">
     <h1>Clientes</h1>
     <div class="actions">
-        <a href="./create" class="btn-actions new">+ Novo Cliente</a>
-        <a href="./customer" class="btn-actions delete">Excluir Cliente</a>
+        <a href="./clientes/cadastrar" class="btn-actions new">+ Novo Cliente</a>
+        <a href="./clientes" class="btn-actions delete">Excluir Cliente</a>
     </div>
     <table>
         <thead>
@@ -33,7 +33,7 @@
                         <td><?= $customer->getCellphone() ?></td>
                         <td><?= $customer->getEmail() ?></td>
                         <td><?= $customer->getBirthDate() ?></td>
-                        <td><a class="btn-table info" href="<?= '/create?id=' . $customer->getId() ?>">Detalhar</a></td>
+                        <td><a class="btn-table info" href="<?= 'clientes/cadastrar?id=' . $customer->getId() ?>">Detalhar</a></td>
                     </tr>
                 <?php endforeach; ?>
             <?php endif ?>

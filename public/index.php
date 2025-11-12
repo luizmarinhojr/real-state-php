@@ -12,10 +12,14 @@
 
     switch ($requestUri) {
         case '/':
+            Controller::initHome()->home();
+            break;
+
+        case '/clientes':
             Controller::initCustomer()->index();
             break;
 
-        case '/create':
+        case '/clientes/cadastrar':
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 Controller::initCustomer()->create();
             } else {

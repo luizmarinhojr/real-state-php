@@ -29,7 +29,21 @@ class ComposerStaticInit0ea96c8f951c27ec542fbb51a89d951b
     );
 
     public static $classMap = array (
+        'App\\Controller\\Controller' => __DIR__ . '/../..' . '/App/Controller/Controller.php',
+        'App\\Controller\\CustomerController' => __DIR__ . '/../..' . '/App/Controller/CustomerController.php',
+        'App\\Controller\\HandlerErrorController' => __DIR__ . '/../..' . '/App/Controller/HandlerErrorController.php',
+        'App\\Controller\\HomeController' => __DIR__ . '/../..' . '/App/Controller/HomeController.php',
+        'App\\Dto\\Request\\AddressDtoRequest' => __DIR__ . '/../..' . '/App/Dto/Request/AddressDtoRequest.php',
+        'App\\Dto\\Request\\CustomerDtoRequest' => __DIR__ . '/../..' . '/App/Dto/Request/CustomerDtoRequest.php',
+        'App\\Dto\\Response\\AddressDtoResponse' => __DIR__ . '/../..' . '/App/Dto/Response/AddressDtoResponse.php',
+        'App\\Dto\\Response\\CustomerDtoResponse' => __DIR__ . '/../..' . '/App/Dto/Response/CustomerDtoResponse.php',
+        'App\\Model\\AddressModel' => __DIR__ . '/../..' . '/App/Model/AddressModel.php',
+        'App\\Model\\CustomerModel' => __DIR__ . '/../..' . '/App/Model/CustomerModel.php',
+        'App\\Repository\\CustomerRepository' => __DIR__ . '/../..' . '/App/Repository/CustomerRepository.php',
+        'App\\Repository\\IRepository' => __DIR__ . '/../..' . '/App/Repository/IRepository.php',
+        'App\\Usecase\\CustomerUsecase' => __DIR__ . '/../..' . '/App/Usecase/CustomerUsecase.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Config\\Database' => __DIR__ . '/../..' . '/Config/Database.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

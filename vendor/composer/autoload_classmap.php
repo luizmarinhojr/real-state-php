@@ -6,5 +6,19 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Controller\\Controller' => $baseDir . '/App/Controller/Controller.php',
+    'App\\Controller\\CustomerController' => $baseDir . '/App/Controller/CustomerController.php',
+    'App\\Controller\\HandlerErrorController' => $baseDir . '/App/Controller/HandlerErrorController.php',
+    'App\\Controller\\HomeController' => $baseDir . '/App/Controller/HomeController.php',
+    'App\\Dto\\Request\\AddressDtoRequest' => $baseDir . '/App/Dto/Request/AddressDtoRequest.php',
+    'App\\Dto\\Request\\CustomerDtoRequest' => $baseDir . '/App/Dto/Request/CustomerDtoRequest.php',
+    'App\\Dto\\Response\\AddressDtoResponse' => $baseDir . '/App/Dto/Response/AddressDtoResponse.php',
+    'App\\Dto\\Response\\CustomerDtoResponse' => $baseDir . '/App/Dto/Response/CustomerDtoResponse.php',
+    'App\\Model\\AddressModel' => $baseDir . '/App/Model/AddressModel.php',
+    'App\\Model\\CustomerModel' => $baseDir . '/App/Model/CustomerModel.php',
+    'App\\Repository\\CustomerRepository' => $baseDir . '/App/Repository/CustomerRepository.php',
+    'App\\Repository\\IRepository' => $baseDir . '/App/Repository/IRepository.php',
+    'App\\Usecase\\CustomerUsecase' => $baseDir . '/App/Usecase/CustomerUsecase.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'Config\\Database' => $baseDir . '/Config/Database.php',
 );
