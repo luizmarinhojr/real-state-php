@@ -6,6 +6,7 @@
             <legend>Dados pessoais</legend>
             <input type="text" placeholder="Nome do cliente" value="<?= $customer->getFirstName() ?? ""  ?>" name="first_name" id="first_name">
             <input type="text" placeholder="Sobrenome do cliente" value="<?= $customer->getLastName() ?? ""  ?>" name="last_name" id="last_name">
+            <input type="text" placeholder="CPF do cliente" value="<?= $customer->getCpf() ?? ""  ?>" name="cpf" id="cpf">
             <input type="date" placeholder="Data de Nascimento" value="<?= $customer->getBirthDate() ?? "" ?>" name="birth_date" id="birth_date">
         </fieldset>
         <fieldset class="address-form">

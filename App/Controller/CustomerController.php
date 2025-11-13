@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Dto\Request\AddressDtoRequest;
-use App\Dto\Response\AddressDtoResponse;
 use App\Dto\Response\CustomerDtoResponse;
 use App\Usecase\CustomerUsecase;
 use App\Dto\Request\CustomerDtoRequest;
@@ -21,9 +20,10 @@ final class CustomerController {
     }
 
     final public function create(): void {
-        $address = new AddressDtoRequest($_POST['street'], $_POST['number'], $_POST['complement'],
-                $_POST['neighborhood'], $_POST['city'], $_POST['state'], $_POST['cep']);
-        $customer = new CustomerDtoRequest($_POST['first_name'], $_POST['last_name'], $_POST['birth_date'], $_POST['email'], $_POST['cellphone'], $address);
+        $customer = new CustomerDtoRequest($_POST['first_name'], $_POST['last_name'], 
+            $_POST['cpf'], $_POST['birth_date'], $_POST['email'], $_POST['cellphone'], 
+                new AddressDtoRequest($_POST['street'], $_POST['number'], $_POST['complement'],
+                $_POST['neighborhood'], $_POST['city'], $_POST['state'], $_POST['cep']));
         $customerResult = $this->usecase->create($customer);;
         header("Location: /");
     }

@@ -5,30 +5,36 @@ namespace App\Usecase;
 use App\Dto\Request\CustomerDtoRequest;
 use App\Dto\Response\CustomerDtoResponse;
 use App\Dto\Response\AddressDtoResponse;
+use App\Model\AddressModel;
 use App\Repository\CustomerRepository;
+use App\Repository\AddressRepository;
 use App\Model\CustomerModel;
 
 final class CustomerUsecase {
-    private readonly CustomerRepository $repo;
+    private readonly CustomerRepository $customerRepo;
+    private readonly AddressRepository $addressRepo;
 
-    public function __construct(CustomerRepository $repo) {
-        $this->repo = $repo;
+    public function __construct(CustomerRepository $customerRepo, AddressRepository $addressRepo) {
+        $this->customerRepo = $customerRepo;
+        $this->addressRepo = $addressRepo;
     }
 
     public function index():?array {
-        $result = $this->repo->fetchAll();
+        $result = $this->customerRepo->fetchAll();
         if (!empty($result)) {
             return $result;
         }
         return null;
     }
 
-    public function create(CustomerDtoRequest $customer): ?CustomerDtoResponse { 
-        return null;
+    public function create(CustomerDtoRequest $customer): ?int {
+        $customerModel = $this->convertToModel($customer);
+        $id = $this->customerRepo->insert($customerModel);
+        return $id;
     }
 
     public function getById(int $id): ?CustomerDtoResponse {
-        $result = $this->repo->fetch($id);
+        $result = $this->customerRepo->fetch($id);
         if (!empty($result)) {
             return $result;
         }
@@ -36,7 +42,7 @@ final class CustomerUsecase {
     }
 
     private function convertToDtoResponse(CustomerModel $customer): CustomerDtoResponse {
-        return new CustomerDtoResponse($customer->getId(), $customer->getFirstName(), $customer->getLastName(), $customer->getBirthDate(), 
+        return new CustomerDtoResponse($customer->getId(), $customer->getFirstName(), $customer->getLastName(), $customer->getCpf(), $customer->getBirthDate(), 
                 $customer->getEmail(), $customer->getCellphone(), new AddressDtoResponse(null, $customer->getAddress()->getStreet(),
                 $customer->getAddress()->getNumber(), $customer->getAddress()->getComplement(), 
                 $customer->getAddress()->getNeighborhood(), $customer->getAddress()->getCity(), $customer->getAddress()->getCep(),
@@ -46,12 +52,24 @@ final class CustomerUsecase {
     private function convertToArrayDtoResponse(array $result): array {
         $customers = [];
         foreach ($result as $customer) {
-            $customers[] = new CustomerDtoResponse($customer->getId(), $customer->getFirstName(), $customer->getLastName(), $customer->getBirthDate(), 
+            $customers[] = new CustomerDtoResponse($customer->getId(), $customer->getFirstName(), $customer->getLastName(), $customer->getCpf(), $customer->getBirthDate(), 
                 $customer->getEmail(), $customer->getCellphone(), new AddressDtoResponse(null, $customer->getAddress()->getStreet(),
                 $customer->getAddress()->getNumber(), $customer->getAddress()->getComplement(), 
                 $customer->getAddress()->getNeighborhood(), $customer->getAddress()->getCity(), $customer->getAddress()->getCep(),
             $customer->getAddress()->getState()));
         }
         return $customers;
+    }
+
+    private function convertToModel(CustomerDtoRequest $customer): CustomerModel{
+        return new CustomerModel(
+            null, $customer->getFirstName(), $customer->getLastName(), $customer->getCpf(), 
+            $customer->getBirthDate(), $customer->getEmail(), $customer->getCellphone(), 
+            new AddressModel(
+                null, $customer->getAddress()->getStreet(), $customer->getAddress()->getNumber(), 
+                $customer->getAddress()->getComplement(), $customer->getAddress()->getNeighborhood(), 
+                $customer->getAddress()->getCity(), $customer->getAddress()->getCep(),
+                $customer->getAddress()->getState())
+        );
     }
 }

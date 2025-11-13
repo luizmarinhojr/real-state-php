@@ -19,7 +19,7 @@ class AddressModel {
     private ?DateTimeImmutable $deletedAt;
     
     public function __construct(?int $id, string $street, int $number, ?string $complement, string $neighborhood, string $city, 
-            string $cep, string $state, ?bool $active, ?DateTimeImmutable $createdAt, ?DateTimeImmutable $modifiedAt = null, 
+            string $cep, string $state, ?bool $active = null, ?DateTimeImmutable $createdAt = null, ?DateTimeImmutable $modifiedAt = null, 
             ?DateTimeImmutable $deletedAt = null) {
         $this->setId($id);
         $this->setStreet($street);

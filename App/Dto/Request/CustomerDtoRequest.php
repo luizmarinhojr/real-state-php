@@ -7,15 +7,17 @@ use Exception, DateTimeImmutable;
 final class CustomerDtoRequest {
     private string $firstName;
     private string $lastName;
+    private ?string $cpf;
     private ?string $birthDate;
     private ?string $email;
     private ?string $cellphone;
     private ?AddressDtoRequest $address;
 
-    public function __construct(string $firstName, string $lastName, ?string $birthDate = null, ?string $email = null, 
+    public function __construct(string $firstName, string $lastName, ?string $cpf = null, ?string $birthDate = null, ?string $email = null, 
             ?string $cellphone = null, ?AddressDtoRequest $address = null) {
         $this->setFirstName($firstName);
         $this->setLastName($lastName);
+        $this->setCpf($cpf);
         $this->setBirthDate($birthDate);
         $this->setEmail($email);
         $this->setCellphone($cellphone);
@@ -28,6 +30,10 @@ final class CustomerDtoRequest {
 
     public function getLastName(): string {
         return $this->lastName;
+    }
+
+    public function getCpf(): ?string {
+        return $this->cpf;
     }
 
     public function getBirthDate(): ?string {
@@ -52,6 +58,10 @@ final class CustomerDtoRequest {
 
     public function setLastName(string $lastName): void {
         $this->lastName = $lastName;
+    }
+
+    public function setCpf(?string $cpf): void {
+        $this->cpf = $cpf;
     }
 
     public function setBirthDate(?string $birthDate): void {

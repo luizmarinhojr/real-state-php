@@ -8,6 +8,7 @@
         private int $id;
         private string $firstName;
         private string $lastName;
+        private ?string $cpf;
         private ?string $birthDate;
         private ?string $email;
         private ?string $cellphone;
@@ -17,12 +18,13 @@
         private ?DateTimeImmutable $modifiedAt;
         private ?DateTimeImmutable $deletedAt;
 
-        public function __construct(?int $id, string $firstName, string $lastName, ?string $birthDate = null, ?string $email = null, 
+        public function __construct(?int $id, string $firstName, string $lastName, ?string $cpf = null ,?string $birthDate = null, ?string $email = null, 
                 ?string $cellphone = null, ?AddressModel $address = null, ?bool $active = null, ?DateTimeImmutable $createdAt = null, 
                 ?DateTimeImmutable $modifiedAt = null, ?DateTimeImmutable $deletedAt = null) {
             $this->setId($id);
             $this->setFirstName($firstName);
             $this->setLastName($lastName);
+            $this->setCpf($cpf);
             $this->setBirthDate($birthDate);
             $this->setEmail($email);
             $this->setCellphone($cellphone);
@@ -43,6 +45,10 @@
 
         public function getLastName(): string {
             return $this->lastName;
+        }
+        
+        public function getCpf(): ?string {
+            return $this->cpf;
         }
 
         public function getBirthDate(): ?string {
@@ -83,6 +89,10 @@
 
         public function setLastName(string $lastName): void {
             $this->lastName = $lastName;
+        }
+        
+        public function setCpf(?string $cpf): void {
+            $this->lastName = $cpf;
         }
 
         public function setBirthDate(string $birthDate): void {
