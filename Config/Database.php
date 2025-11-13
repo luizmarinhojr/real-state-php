@@ -5,7 +5,7 @@ namespace Config;
 use mysqli;
 
 class Database {
-    private const HOST = "172.19.0.3";
+    private const HOST = "db";
     private const USER = "root";
     private const PASS = "myfirstpassword";
     private const DATABASE = "real_state";
