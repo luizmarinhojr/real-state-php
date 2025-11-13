@@ -4,8 +4,10 @@ services:
     container_name: mysql_real_state
     restart: always
     environment:
-      MYSQL_DATABASE: real_state 
+      # MYSQL_DATABASE: real_state 
       MYSQL_ROOT_PASSWORD: myfirstpassword
+      LANG: C.UTF-8
+      LC_ALL: C.UTF-8
       
     ports:
       - "3306:3306"

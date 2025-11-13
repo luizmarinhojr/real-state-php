@@ -1,3 +1,9 @@
+CREATE DATABASE IF NOT EXISTS real_state 
+    CHARACTER SET utf8mb4 
+    COLLATE utf8mb4_unicode_ci; 
+
+USE real_state;
+
 CREATE TABLE customers (
 	id INT AUTO_INCREMENT NOT NULL,
 	first_name VARCHAR(40) NOT NULL,
@@ -11,7 +17,7 @@ CREATE TABLE customers (
 	modified_at TIMESTAMP,
 	deleted_at TIMESTAMP,
 	PRIMARY KEY(id)
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE addresses (
 	id INT AUTO_INCREMENT NOT NULL,
@@ -29,7 +35,7 @@ CREATE TABLE addresses (
 	deleted_at TIMESTAMP,
 	PRIMARY KEY(id),
 	FOREIGN KEY(id_customer) REFERENCES customers(id)
-);
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 INSERT INTO customers (first_name, last_name, cpf, birth_date, cellphone, email, active, created_at, modified_at, deleted_at) VALUES 
 ('Aline', 'Guedes', '00100100101', '1990-01-01', '11900000001', 'aline.guedes@email.com', TRUE, NOW(), NULL, NULL),
