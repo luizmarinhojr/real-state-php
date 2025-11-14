@@ -6,6 +6,7 @@ use App\Dto\Request\AddressDtoRequest;
 use App\Dto\Response\CustomerDtoResponse;
 use App\Usecase\CustomerUsecase;
 use App\Dto\Request\CustomerDtoRequest;
+use TypeError;
 
 final class CustomerController {
     private readonly CustomerUsecase $usecase;
@@ -20,12 +21,29 @@ final class CustomerController {
     }
 
     final public function create(): void {
-        $customer = new CustomerDtoRequest($_POST['first_name'], $_POST['last_name'], 
-            $_POST['cpf'], $_POST['birth_date'], $_POST['email'], $_POST['cellphone'], 
-                new AddressDtoRequest($_POST['street'], $_POST['number'], $_POST['complement'],
-                $_POST['neighborhood'], $_POST['city'], $_POST['state'], $_POST['cep']));
-        $customerResult = $this->usecase->create($customer);;
-        header("Location: /");
+        $hasAddress = isset($_POST["address"]) ?? false;
+
+        try {
+            $customer = new CustomerDtoRequest($this->nullIfEmpty($_POST['first_name']), 
+                $this->nullIfEmpty($_POST['last_name']), $this->nullIfEmpty($_POST['cpf']), 
+                $this->nullIfEmpty($_POST['birth_date']), $this->nullIfEmpty($_POST['email']), 
+                $this->nullIfEmpty($_POST['cellphone']), null);
+
+            if ($hasAddress) {
+                $customer->setAddress(new AddressDtoRequest($this->nullIfEmpty($_POST['street']), 
+                    $this->nullIfEmpty($_POST['number']), $this->nullIfEmpty($_POST['complement']),
+                    $this->nullIfEmpty($_POST['neighborhood']), $this->nullIfEmpty($_POST['city']), 
+                    $this->nullIfEmpty($_POST['state']), $this->nullIfEmpty($_POST['cep'])));
+                var_dump($customer);
+            }
+        } catch(TypeError $e) {
+            include VIEW . '/pages/400.php';
+        }
+        
+        $customerResult = $this->usecase->create($customer);
+        // header("Location: /clientes");
+        
+        // exit;
     }
 
     final public function detail(): void {
@@ -34,5 +52,9 @@ final class CustomerController {
             $customer = $this->usecase->getById((int) $_GET['id']);
         }
         require_once VIEW . 'pages/create.php';
+    }
+
+    private function nullIfEmpty(string $object): ?string {
+        return $object === '' ? null : $object;
     }
 }

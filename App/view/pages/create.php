@@ -19,5 +19,6 @@
         </div>
     </main>
     <?php include VIEW . "components/footer.php"; ?>
+    <script src="../scripts/form.js"></script>
 </body>
 </html>

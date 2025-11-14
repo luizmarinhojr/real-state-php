@@ -53,7 +53,7 @@ final class CustomerDtoRequest {
     }
 
     public function setFirstName(string $firstName): void {
-        $this->firstNname = $firstName;
+        $this->firstName = $firstName;
     }
 
     public function setLastName(string $lastName): void {

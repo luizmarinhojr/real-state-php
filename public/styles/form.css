@@ -13,12 +13,22 @@ fieldset {
     gap: 10px;
     flex-grow: 1;
     margin-top: 20px;
+    margin-bottom: 20px;
     border-radius: 10px;
     border: 1px solid rgb(225, 225, 225);
 }
 
+#address-group.visible {
+    display: block;
+}
+
+#address-group.hide {
+    display: none;
+}
+
 .address-form {
     flex-direction: column;
+    gap: 15px;
 }
 
 .btn-submit {
@@ -36,5 +46,4 @@ fieldset {
     display: flex;
     gap: 10px;
     flex-grow: 1;
-    margin-top: 15px;
 }
