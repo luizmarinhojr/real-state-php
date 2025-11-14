@@ -29,8 +29,12 @@ final class CustomerUsecase {
 
     public function create(CustomerDtoRequest $customer): ?int {
         $customerModel = $this->convertToModel($customer);
-        $id = $this->customerRepo->insert($customerModel);
-        return $id;
+        $customerId = $this->customerRepo->insert($customerModel);
+        $address = $customerModel->getAddress();
+        if ($address != null) {
+            $address = $this->addressRepo->insert($address, $customerId);
+        }
+        return $customerId;
     }
 
     public function getById(int $id): ?CustomerDtoResponse {
@@ -62,14 +66,15 @@ final class CustomerUsecase {
     }
 
     private function convertToModel(CustomerDtoRequest $customer): CustomerModel{
-        return new CustomerModel(
+        $customerModel = new CustomerModel(
             null, $customer->getFirstName(), $customer->getLastName(), $customer->getCpf(), 
-            $customer->getBirthDate(), $customer->getEmail(), $customer->getCellphone(), 
-            new AddressModel(
-                null, $customer->getAddress()->getStreet(), $customer->getAddress()->getNumber(), 
-                $customer->getAddress()->getComplement(), $customer->getAddress()->getNeighborhood(), 
-                $customer->getAddress()->getCity(), $customer->getAddress()->getCep(),
-                $customer->getAddress()->getState())
-        );
+            $customer->getBirthDate(), $customer->getEmail(), $customer->getCellphone());
+        $address = $customer->getAddress();
+        if ($address != null) {
+            $customerModel->setAddress(new AddressModel(
+                null, $address->getStreet(), $address->getNumber(), $address->getComplement(), 
+                $address->getNeighborhood(), $address->getCity(), $address->getCep(), $address->getState()));
+        }
+        return $customerModel;
     }
 }

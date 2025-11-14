@@ -34,16 +34,15 @@ final class CustomerController {
                     $this->nullIfEmpty($_POST['number']), $this->nullIfEmpty($_POST['complement']),
                     $this->nullIfEmpty($_POST['neighborhood']), $this->nullIfEmpty($_POST['city']), 
                     $this->nullIfEmpty($_POST['state']), $this->nullIfEmpty($_POST['cep'])));
-                var_dump($customer);
             }
         } catch(TypeError $e) {
             include VIEW . '/pages/400.php';
+            exit;
         }
-        
+
         $customerResult = $this->usecase->create($customer);
-        // header("Location: /clientes");
-        
-        // exit;
+        header("Location: /clientes");
+        exit;
     }
 
     final public function detail(): void {
@@ -51,6 +50,7 @@ final class CustomerController {
         if (isset($_GET['id'])) {
             $customer = $this->usecase->getById((int) $_GET['id']);
         }
+        var_dump($customer);
         require_once VIEW . 'pages/create.php';
     }
 

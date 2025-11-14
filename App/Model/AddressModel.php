@@ -5,18 +5,18 @@ namespace App\Model;
 use DateTimeImmutable;
 
 class AddressModel {
-    private ?int $id;
-    private string $street;
-    private int $number;
-    private ?string $complement;
-    private string $neighborhood;
-    private string $city;
-    private string $state;
-    private string $cep;
-    private ?bool $active;
-    private readonly DateTimeImmutable $createdAt;
-    private ?DateTimeImmutable $modifiedAt;
-    private ?DateTimeImmutable $deletedAt;
+    public ?int $id;
+    public string $street;
+    public int $number;
+    public ?string $complement;
+    public string $neighborhood;
+    public string $city;
+    public string $state;
+    public string $cep;
+    public ?bool $active;
+    public readonly DateTimeImmutable $createdAt;
+    public ?DateTimeImmutable $modifiedAt;
+    public ?DateTimeImmutable $deletedAt;
     
     public function __construct(?int $id, string $street, int $number, ?string $complement, string $neighborhood, string $city, 
             string $cep, string $state, ?bool $active = null, ?DateTimeImmutable $createdAt = null, ?DateTimeImmutable $modifiedAt = null, 

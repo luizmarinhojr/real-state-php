@@ -12,24 +12,26 @@ final class AddressRepository {
         $this->db = $db;
     }
 
-    public function insert(AddressModel $address): int {
-        $query = "INSERT INTO addresses (id_address, street, number, complement, neighborhood, city, state, cep, active, created_at) 
-        VALUES (1, 'Rua das Palmeiras', 101, 'Apto 10', 'Jardim Paulista', 'São Paulo', 'SP', '01001001', TRUE, NOW());";
+    public function insert(AddressModel $address, int $idCustomer): int {
+        $query = "INSERT INTO addresses (id_customer, street, number, complement, neighborhood, city, state, cep, created_at) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
         $stmt = $this->db->prepare($query);
         if (!$stmt) {
             throw new Exception("Falha na preparação da query de inserção: " . $this->db->error);
         }
 
-        $types = "ssssssisss";
+        $types = "isissssss";
         $stmt->bind_param(
             $types,
-            $address->getFirstName(),
-            $address->getLastName(),
-            $address->getCpf(),
-            $address->getBirthDate(),
-            $address->getCellphone(),
-            $address->getEmail(),
-            $address->getCreatedAt()
+            $idCustomer,
+            $address->street,
+            $address->number,
+            $address->complement,
+            $address->neighborhood,
+            $address->city,
+            $address->state,
+            $address->cep,
+            $address->createdAt
         );
 
         $success = $stmt->execute();

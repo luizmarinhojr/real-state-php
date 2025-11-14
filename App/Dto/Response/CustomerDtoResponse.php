@@ -13,7 +13,7 @@
         private ?string $cellphone;
         private ?AddressDtoResponse $address;
         private ?bool $active;
-        private readonly ?string $createdAt;
+        private ?string $createdAt;
         private ?string $modifiedAt;
         private ?string $deletedAt;
 

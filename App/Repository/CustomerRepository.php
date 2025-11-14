@@ -24,16 +24,16 @@ class CustomerRepository {
             throw new Exception("Falha na preparação da query de inserção: " . $this->db->error);
         }
 
-        $types = "ssssssisss";
+        $types = "sssssss";
         $stmt->bind_param(
             $types,
-            $customer->getFirstName(),
-            $customer->getLastName(),
-            $customer->getCpf(),
-            $customer->getBirthDate(),
-            $customer->getCellphone(),
-            $customer->getEmail(),
-            $customer->getCreatedAt()
+            $customer->firstName,
+            $customer->lastName,
+            $customer->cpf,
+            $customer->birthDate,
+            $customer->cellphone,
+            $customer->email,
+            $customer->createdAt
         );
 
         $success = $stmt->execute();
@@ -104,5 +104,9 @@ class CustomerRepository {
     
     public function delete(int $id): bool{
         return false;
+    }
+
+    public function existsById() {
+        
     }
 }

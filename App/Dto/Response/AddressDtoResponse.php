@@ -14,7 +14,7 @@ final class AddressDtoResponse {
     private ?string $cep;
     private ?string $state;
     private ?bool $active;
-    private readonly ?string $createdAt;
+    private ?string $createdAt;
     private ?string $modifiedAt;
     private ?string $deletedAt;
 
@@ -67,15 +67,15 @@ final class AddressDtoResponse {
         return $this->state;
     }
 
-    public function getCreatedAt(): ?DateTimeImmutable {
+    public function getCreatedAt(): ?string {
         return $this->createdAt;
     }
 
-    public function getModifiedAt(): ?DateTimeImmutable {
+    public function getModifiedAt(): ?string {
         return $this->modifiedAt;
     }
 
-    public function getDeletedAt(): ?DateTimeImmutable {
+    public function getDeletedAt(): ?string {
         return $this->deletedAt;
     }
 
