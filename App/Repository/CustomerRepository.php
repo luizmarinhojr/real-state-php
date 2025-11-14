@@ -3,7 +3,6 @@ namespace App\Repository;
 
 use App\Dto\Response\AddressDtoResponse;
 use App\Dto\Response\CustomerDtoResponse;
-use App\Model\AddressModel;
 use App\Model\CustomerModel;
 
 use mysqli, Exception;
@@ -71,9 +70,8 @@ class CustomerRepository {
         $query = "SELECT c.id, c.first_name, c.last_name, c.cpf, c.birth_date, c.cellphone, c.email, c.created_at AS c_created_at, c.modified_at AS c_modified_at, c.deleted_at AS c_deleted_at,
                 a.street, a.number, a.complement, a.neighborhood, a.city, a.state, a.cep, a.created_at AS a_created_at, a.modified_at AS a_modified_at, a.deleted_at AS a_deleted_at
                 FROM customers c
-                JOIN addresses a ON c.id = a.id
-                WHERE c.id = ? AND c.active = true
-                ORDER BY c.first_name ASC;";
+                LEFT JOIN addresses a ON c.id = a.id_customer
+                WHERE c.id = ? AND c.active = true;";
         $stmt = $this->db->prepare($query);
         if (!$stmt) {
             throw new Exception("Falha na preparação da query: " . $this->db->error);
@@ -92,6 +90,7 @@ class CustomerRepository {
         $address = new AddressDtoResponse(null, $row['street'],$row['number'],
             $row['complement'],$row['neighborhood'],$row['city'], $row['cep'], 
                 $row['state'], null, $row['a_created_at'], $row['a_modified_at'], $row['a_deleted_at']);
+
         $customer = new CustomerDtoResponse($row['id'], $row['first_name'], $row['last_name'], $row['cpf'], $row['birth_date'], 
                 $row['email'], $row['cellphone'], $address, $row['c_created_at'], $row['c_modified_at'], $row['c_deleted_at']);
         $stmt->close();
@@ -108,5 +107,17 @@ class CustomerRepository {
 
     public function existsById() {
         
+    }
+
+    final public function beginTransaction(): bool {
+        return $this->db->begin_transaction();
+    }
+
+    final public function commit(): bool {
+        return $this->db->commit();
+    }
+
+    final public function rollback(): bool {
+        return $this->db->rollback();
     }
 }

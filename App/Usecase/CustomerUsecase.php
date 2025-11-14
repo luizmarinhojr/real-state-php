@@ -9,6 +9,7 @@ use App\Model\AddressModel;
 use App\Repository\CustomerRepository;
 use App\Repository\AddressRepository;
 use App\Model\CustomerModel;
+use Exception;
 
 final class CustomerUsecase {
     private readonly CustomerRepository $customerRepo;
@@ -29,12 +30,26 @@ final class CustomerUsecase {
 
     public function create(CustomerDtoRequest $customer): ?int {
         $customerModel = $this->convertToModel($customer);
-        $customerId = $this->customerRepo->insert($customerModel);
-        $address = $customerModel->getAddress();
-        if ($address != null) {
-            $address = $this->addressRepo->insert($address, $customerId);
+        $this->customerRepo->beginTransaction();
+
+        try {
+            $customerModel = $this->convertToModel($customer);
+        
+            $customerId = $this->customerRepo->insert($customerModel);
+            
+            $address = $customerModel->getAddress();
+            
+            if ($address != null) {
+                $this->addressRepo->insert($address, $customerId); 
+            }
+
+            $this->customerRepo->commit();
+            
+            return $customerId;
+        } catch(Exception $e) {
+            $this->customerRepo->rollback();
+            echo 'Error to insert data on database. Please, try again later. Error: ' . $e;
         }
-        return $customerId;
     }
 
     public function getById(int $id): ?CustomerDtoResponse {

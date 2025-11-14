@@ -14,7 +14,8 @@ final class AddressRepository {
 
     public function insert(AddressModel $address, int $idCustomer): int {
         $query = "INSERT INTO addresses (id_customer, street, number, complement, neighborhood, city, state, cep, created_at) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                
         $stmt = $this->db->prepare($query);
         if (!$stmt) {
             throw new Exception("Falha na preparação da query de inserção: " . $this->db->error);
