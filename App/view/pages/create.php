@@ -13,12 +13,14 @@
 </head>
 <body>
     <?php include VIEW . "components/header.php"; ?>
-    <main>
+    <main class="fade-in-animation" id="main">
         <div class="container-fluid">
             <?php include VIEW . "components/form.php"; ?>
         </div>
     </main>
     <?php include VIEW . "components/footer.php"; ?>
-    <script src="../scripts/form.js"></script>
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/form.js" defer></script>
+    <script src="../scripts/cep-api.js" defer></script>
 </body>
 </html>

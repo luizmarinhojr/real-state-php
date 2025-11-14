@@ -50,7 +50,8 @@ class CustomerRepository {
     public function fetchAll():?array {
         $query = "SELECT c.id, c.first_name, c.last_name, c.cpf, c.birth_date, c.cellphone, c.email, a.neighborhood, a.city 
                 FROM customers c 
-                LEFT JOIN addresses a ON c.id = a.id_customer;";
+                LEFT JOIN addresses a ON c.id = a.id_customer
+                WHERE c.active = true;";
         $result = $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
         $this->db->close();
         if (!empty($result)) {

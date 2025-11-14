@@ -13,7 +13,7 @@
 </head>
 <body>
     <?php include VIEW . "components/header.php"; ?>
-    <main>
+    <main class="fade-in-animation" id="main">
         <div class="container-fluid">
             <div class="container">
                 <h1>Bem-vindo a <span style="color: blue;">BROKER</span></h1>
@@ -48,5 +48,6 @@
         </div>
     </main>
     <?php include VIEW . "components/footer.php"; ?>
+    <script src="../scripts/main.js"></script>
 </body>
 </html>

@@ -1,3 +1,13 @@
+main.fade-in-animation {
+    opacity: 0 !important;;
+    transition: opacity 0.4s ease-in-out; /* Duração da transição */
+}
+
+/* Estado final "visível" */
+main.fade-in-animation.loaded {
+    opacity: 1 !important;;
+}
+
 * {
     font-family: "Montserrat", sans-serif;
 }

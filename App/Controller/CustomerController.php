@@ -22,7 +22,6 @@ final class CustomerController {
 
     final public function create(): void {
         $hasAddress = isset($_POST["address"]) ?? false;
-        var_dump($hasAddress);
 
         try {
             $customer = new CustomerDtoRequest($this->nullIfEmpty($_POST['first_name']), 

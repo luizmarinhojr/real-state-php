@@ -15,13 +15,13 @@
             <input type="text" placeholder="Digite o seu número de celular" value="<?= $customer->getCellphone() ?? "" ?>" name="cellphone" id="cellphone">
         </fieldset>
         <label for="address">Cadastrar endereço?</label>
-        <input type="checkbox" name="address" id="address" onchange="dosomething()">
+        <input type="checkbox" name="address" id="address" onchange="toogleAddressGroup()" <?= $customer->GetAddress() != null ? 'checked' : '' ?>>
         <div id="address-group" class="hide">
             <fieldset class="address-form">
                 <legend>Endereço</legend>
                 <?php if ($customer->getAddress() != null): ?>
                     <div class="group-form">
-                        <input type="text" placeholder="Digite o CEP" value="<?= $customer->getAddress()->getCep() ?? "" ?>" name="cep" id="cep">
+                        <input type="text" placeholder="Digite o CEP" oninput="fillAddressByCep(this)" value="<?= $customer->getAddress()->getCep() ?? "" ?>" name="cep" id="cep">
                         <input type="text" placeholder="Digite a rua" value="<?= $customer->getAddress()->getStreet() ?? "" ?>" name="street" id="street">
                         <input type="text" placeholder="Digite o número" value="<?= $customer->getAddress()->getNumber() ?? "" ?>" name="number" id="number">
                         <input type="text" placeholder="Digite o complemento" value="<?= $customer->getAddress()->getComplement() ?? "" ?>" name="complement" id="complement">
@@ -33,7 +33,7 @@
                     </div>
                 <?php else: ?>
                     <div class="group-form">
-                        <input type="text" placeholder="Digite o CEP" value="" name="cep" id="cep">
+                        <input type="text" placeholder="Digite o CEP" oninput="fillAddressByCep(this)" value="" name="cep" id="cep">
                         <input type="text" placeholder="Digite a rua" value="" name="street" id="street">
                         <input type="text" placeholder="Digite o número" value="" name="number" id="number">
                         <input type="text" placeholder="Digite o complemento" value="" name="complement" id="complement">
@@ -47,6 +47,6 @@
             </fieldset>
         </div>
 
-        <input type="submit" class="btn-submit" value="Cadastrar" style="margin-top: 20px;">
+        <input type="submit" class="btn-submit" value="<?= $customer->getId() == '' ? 'Cadastrar' : 'Atualizar' ?>" style="margin-top: 20px;">
     </form>
 </div>
