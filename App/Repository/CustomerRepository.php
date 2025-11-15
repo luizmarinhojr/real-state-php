@@ -5,7 +5,7 @@ use App\Dto\Response\AddressDtoResponse;
 use App\Dto\Response\CustomerDtoResponse;
 use App\Model\CustomerModel;
 
-use mysqli, Exception;
+use mysqli, Exception, DateTimeImmutable;
 
 class CustomerRepository {
     private readonly mysqli $db;
@@ -69,7 +69,7 @@ class CustomerRepository {
 
     public function fetch(int $id): ?object {
         $query = "SELECT c.id, c.first_name, c.last_name, c.cpf, c.birth_date, c.cellphone, c.email, c.created_at AS c_created_at, c.modified_at AS c_modified_at, c.deleted_at AS c_deleted_at,
-                a.street, a.number, a.complement, a.neighborhood, a.city, a.state, a.cep, a.created_at AS a_created_at, a.modified_at AS a_modified_at, a.deleted_at AS a_deleted_at
+                a.id AS id_address, a.street, a.number, a.complement, a.neighborhood, a.city, a.state, a.cep, a.created_at AS a_created_at, a.modified_at AS a_modified_at, a.deleted_at AS a_deleted_at
                 FROM customers c
                 LEFT JOIN addresses a ON c.id = a.id_customer
                 WHERE c.id = ? AND c.active = true;";
@@ -88,18 +88,53 @@ class CustomerRepository {
             return null; 
         }
         $row = $result->fetch_assoc();
-        $address = new AddressDtoResponse(null, $row['street'],$row['number'],
+        $address = null;
+        if ($row['street'] != null) {
+            $address = new AddressDtoResponse($row['id_address'], $row['street'],$row['number'],
             $row['complement'],$row['neighborhood'],$row['city'], $row['cep'], 
                 $row['state'], null, $row['a_created_at'], $row['a_modified_at'], $row['a_deleted_at']);
-
+        }
         $customer = new CustomerDtoResponse($row['id'], $row['first_name'], $row['last_name'], $row['cpf'], $row['birth_date'], 
                 $row['email'], $row['cellphone'], $address, $row['c_created_at'], $row['c_modified_at'], $row['c_deleted_at']);
         $stmt->close();
         return $customer;
     }
 
-    public function update(object $entity): bool {
-        return false;
+    public function update(CustomerModel $customer): void {
+        $query = "UPDATE customers 
+                    SET 
+                        first_name = ?, last_name = ?, cpf = ?, birth_date = ?, 
+                        cellphone = ?,  email = ?, modified_at = ?
+                    WHERE id = ?;";
+
+        $stmt = $this->db->prepare($query);
+        if (!$stmt) {
+            throw new Exception("Falha na preparação da query de inserção: " . $this->db->error);
+        }
+
+        $modifiedAtDate = new DateTimeImmutable('now');
+        $modifiedAt = $modifiedAtDate->format('Y-m-d H:i:s');
+
+        $types = "sssssssi";
+        $stmt->bind_param(
+            $types,
+            $customer->firstName,
+            $customer->lastName,
+            $customer->cpf,
+            $customer->birthDate,
+            $customer->cellphone,
+            $customer->email,
+            $modifiedAt,
+            $customer->id
+        );
+
+        $success = $stmt->execute();
+        
+        if (!$success) {
+            throw new Exception("Erro ao executar a inserção: " . $stmt->error);
+        }
+
+        $stmt->close();
     }
     
     public function delete(int $id): bool{

@@ -8,7 +8,7 @@ CREATE TABLE customers (
 	id INT AUTO_INCREMENT NOT NULL,
 	first_name VARCHAR(40) NOT NULL,
 	last_name VARCHAR(40) NOT NULL,
-	cpf VARCHAR(11),
+	cpf VARCHAR(11) UNIQUE,
 	birth_date DATE,
 	cellphone VARCHAR(15),
 	email varchar(254),

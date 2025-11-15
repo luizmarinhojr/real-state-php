@@ -52,6 +52,27 @@ final class CustomerUsecase {
         }
     }
 
+    public function update(CustomerDtoRequest $customer, int $customerId, ?int $addressId): void {
+        $customerModel = $this->convertToModel($customer);
+        $this->customerRepo->beginTransaction();
+
+        try {
+            $customerModel = $this->convertToModel($customer);
+            $customerModel->id = $customerId;
+            
+            $this->customerRepo->update($customerModel);
+            
+            if ($addressId != null) {
+                $this->addressRepo->update($customerModel->getAddress(), $addressId); 
+            }
+
+            $this->customerRepo->commit();
+        } catch(Exception $e) {
+            $this->customerRepo->rollback();
+            echo 'Error to insert data on database. Please, try again later. Error: ' . $e;
+        }
+    }
+
     public function getById(int $id): ?CustomerDtoResponse {
         $result = $this->customerRepo->fetch($id);
         if (!empty($result)) {
@@ -83,7 +104,7 @@ final class CustomerUsecase {
     private function convertToModel(CustomerDtoRequest $customer): CustomerModel{
         $customerModel = new CustomerModel(
             null, $customer->getFirstName(), $customer->getLastName(), $customer->getCpf(), 
-            $customer->getBirthDate(), $customer->getEmail(), $customer->getCellphone());
+            $customer->getBirthDate(), $customer->getEmail(), $customer->getCellphone(), null, null, null);
         $address = $customer->getAddress();
         if ($address != null) {
             $customerModel->setAddress(new AddressModel(

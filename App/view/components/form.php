@@ -1,6 +1,6 @@
 <div class="container">
     <h1>Cadastrar Cliente</h1>
-    <form method="post" action="/clientes/cadastrar" id="form-register">
+    <form method="post" action="<?= $customer->getId() == '' ? "/clientes/cadastrar" : '/clientes/atualizar' ?>" id="form-register">
             <input type="hidden" name="id" value="<?= $customer->getId() ?? "" ?>">
         <fieldset class="customer-data-forms">
             <legend>Dados pessoais</legend>
@@ -15,10 +15,18 @@
             <input type="text" placeholder="Digite o seu número de celular" value="<?= $customer->getCellphone() ?? "" ?>" name="cellphone" id="cellphone">
         </fieldset>
         <label for="address">Cadastrar endereço?</label>
-        <input type="checkbox" name="address" id="address" onchange="toogleAddressGroup()" <?= $customer->GetAddress() != null ? 'checked' : '' ?>>
+
+        <?php if ($customer->getAddress() != null): ?>
+            <input type="hidden" name="id-address" value="<?= $customer->getAddress()->getId()?>">
+            <input type="checkbox" name="address" id="address" onchange="toogleAddressGroup()" checked>
+        <?php else: ?>
+            <input type="checkbox" name="address" id="address" onchange="toogleAddressGroup()">
+        <?php endif ?>
+
         <div id="address-group" class="hide">
             <fieldset class="address-form">
                 <legend>Endereço</legend>
+
                 <?php if ($customer->getAddress() != null): ?>
                     <div class="group-form">
                         <input type="text" placeholder="Digite o CEP" oninput="fillAddressByCep(this)" value="<?= $customer->getAddress()->getCep() ?? "" ?>" name="cep" id="cep">
@@ -44,6 +52,7 @@
                         <input type="text" placeholder="Digite o estado" value="" name="state" id="state">
                     </div>
                 <?php endif ?>
+                
             </fieldset>
         </div>
 

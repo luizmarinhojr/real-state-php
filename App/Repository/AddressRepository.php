@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Model\AddressModel;
-use mysqli, Exception;
+use mysqli, Exception, DateTimeImmutable;
 
 final class AddressRepository {
     private readonly mysqli $db;
@@ -45,5 +45,48 @@ final class AddressRepository {
         $stmt->close();
 
         return $insertedId;
+    }
+
+    public function update(AddressModel $address, $addressId): void {
+        $query = "UPDATE addresses 
+                    SET 
+                        street = ?, 
+                        number = ?, 
+                        complement = ?, 
+                        neighborhood = ?, 
+                        city = ?, 
+                        state = ?, 
+                        cep = ?, 
+                        modified_at = ?
+                    WHERE id = ?;";
+        $stmt = $this->db->prepare($query);
+        if (!$stmt) {
+            throw new Exception("Falha na preparação da query de inserção: " . $this->db->error);
+        }
+
+        $modifiedAtDate = new DateTimeImmutable('now');
+        $modifiedAt = $modifiedAtDate->format('Y-m-d H:i:s');
+
+        $types = "sissssssi";
+        $stmt->bind_param(
+            $types,
+            $address->street,
+            $address->number,
+            $address->complement,
+            $address->neighborhood,
+            $address->city,
+            $address->state,
+            $address->cep,
+            $modifiedAt,
+            $addressId
+        );
+
+        $success = $stmt->execute();
+        
+        if (!$success) {
+            throw new Exception("Erro ao executar a inserção: " . $stmt->error);
+        }
+
+        $stmt->close();
     }
 }

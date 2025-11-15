@@ -26,6 +26,10 @@
                 Controller::initCustomer()->detail();
             }
             break;
+
+        case '/clientes/atualizar':
+            Controller::initCustomer()->update();
+            break;
             
         default:
             Controller::initHandlerError()->error404();
