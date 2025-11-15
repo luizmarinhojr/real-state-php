@@ -30,6 +30,9 @@
         case '/clientes/atualizar':
             Controller::initCustomer()->update();
             break;
+        
+        case '/clientes/excluir':
+            Controller::initCustomer()->delete();
             
         default:
             Controller::initHandlerError()->error404();

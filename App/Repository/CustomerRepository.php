@@ -138,7 +138,27 @@ class CustomerRepository {
     }
     
     public function delete(int $id): bool{
-        return false;
+        $query = "DELETE FROM customers WHERE id = ?;";
+
+        $stmt = $this->db->prepare($query);
+        if (!$stmt) {
+            return false;
+        }
+
+        $stmt->bind_param(
+            'i',
+            $id
+        );
+
+        $success = $stmt->execute();
+        
+        if (!$success) {
+            return false;
+        }
+
+        $stmt->close();
+
+        return true;
     }
 
     public function existsById() {

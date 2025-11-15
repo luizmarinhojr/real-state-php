@@ -1,40 +1,43 @@
 CREATE DATABASE IF NOT EXISTS real_state 
-    CHARACTER SET utf8mb4 
-    COLLATE utf8mb4_unicode_ci; 
+	CHARACTER SET utf8mb4 
+	COLLATE utf8mb4_unicode_ci;
 
 USE real_state;
 
-CREATE TABLE customers (
-	id INT AUTO_INCREMENT NOT NULL,
-	first_name VARCHAR(40) NOT NULL,
-	last_name VARCHAR(40) NOT NULL,
-	cpf VARCHAR(11) UNIQUE,
-	birth_date DATE,
-	cellphone VARCHAR(15),
-	email varchar(254),
-	active BOOLEAN NOT NULL DEFAULT TRUE,
-	created_at TIMESTAMP NOT NULL,
-	modified_at TIMESTAMP,
-	deleted_at TIMESTAMP,
-	PRIMARY KEY(id)
+CREATE TABLE IF NOT EXISTS customers (
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(40) NOT NULL,
+    last_name VARCHAR(40) NOT NULL,
+    cpf VARCHAR(11) UNIQUE,
+    birth_date DATE,
+    cellphone VARCHAR(15),
+    email varchar(254),
+    active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL,
+    modified_at TIMESTAMP NULL,
+    deleted_at TIMESTAMP NULL,
+    PRIMARY KEY(id)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-CREATE TABLE addresses (
-	id INT AUTO_INCREMENT NOT NULL,
-	id_customer INT NOT NULL,
-	street VARCHAR(100) NOT NULL,
-	number INT NOT NULL,
-	complement VARCHAR(10),
-	neighborhood VARCHAR(100) NOT NULL,
-	city VARCHAR(100) NOT NULL,
-	state CHAR(2) NOT NULL,
-	cep VARCHAR(8) NOT NULL,
-	active BOOLEAN NOT NULL DEFAULT TRUE,
-	created_at TIMESTAMP NOT NULL,
-	modified_at TIMESTAMP,
-	deleted_at TIMESTAMP,
-	PRIMARY KEY(id),
-	FOREIGN KEY(id_customer) REFERENCES customers(id)
+CREATE TABLE IF NOT EXISTS addresses (
+    id INT AUTO_INCREMENT NOT NULL,
+    id_customer INT NOT NULL,
+    street VARCHAR(100) NOT NULL,
+    number INT NOT NULL,
+    complement VARCHAR(10),
+    neighborhood VARCHAR(100) NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    state CHAR(2) NOT NULL,
+    cep VARCHAR(8) NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL,
+    modified_at TIMESTAMP NULL,
+    deleted_at TIMESTAMP NULL,
+    PRIMARY KEY(id),
+    
+    FOREIGN KEY(id_customer) 
+    REFERENCES customers(id)
+    ON DELETE CASCADE
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 INSERT INTO customers (first_name, last_name, cpf, birth_date, cellphone, email, active, created_at, modified_at, deleted_at) VALUES 

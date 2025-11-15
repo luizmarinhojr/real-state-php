@@ -81,6 +81,10 @@ final class CustomerUsecase {
         return null;
     }
 
+    public function delete(int $id): bool {
+        return $this->customerRepo->delete($id);
+    }
+
     private function convertToDtoResponse(CustomerModel $customer): CustomerDtoResponse {
         return new CustomerDtoResponse($customer->getId(), $customer->getFirstName(), $customer->getLastName(), $customer->getCpf(), $customer->getBirthDate(), 
                 $customer->getEmail(), $customer->getCellphone(), new AddressDtoResponse(null, $customer->getAddress()->getStreet(),

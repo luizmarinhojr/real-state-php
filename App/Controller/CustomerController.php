@@ -69,6 +69,20 @@ final class CustomerController {
         exit;
     }
 
+    public function delete(): void {
+        if (!isset($_GET['id'])) {
+            exit;
+        }
+        $idCustomer = (int) $_GET['id'];
+        $success = $this->usecase->delete($idCustomer);
+        if (!$success) {
+            include VIEW . '/pages/400.php';
+            exit;
+        }
+        header("Location: /clientes");
+        exit;
+    }
+
     private function nullIfEmpty(string $object): ?string {
         return $object === '' ? null : $object;
     }
