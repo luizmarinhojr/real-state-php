@@ -16,7 +16,7 @@
             break;
 
         case '/clientes':
-            Controller::initCustomer()->index();
+            Controller::initCustomer()->all();
             break;
 
         case '/clientes/cadastrar':

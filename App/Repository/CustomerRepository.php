@@ -47,12 +47,25 @@ class CustomerRepository {
         return $insertedId;
     }
 
-    public function fetchAll():?array {
+    public function fetchAll(int $limit, int $offset): ?array {
+        $totalRecords = $this->countAll();
         $query = "SELECT c.id, c.first_name, c.last_name, c.cpf, c.birth_date, c.cellphone, c.email, a.neighborhood, a.city 
                 FROM customers c 
                 LEFT JOIN addresses a ON c.id = a.id_customer
-                WHERE c.active = true;";
-        $result = $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
+                WHERE c.active = true 
+                LIMIT ? OFFSET ?";
+        $stmt = $this->db->prepare($query);
+        if (!$stmt) {
+            throw new Exception("Falha na preparação da query: " . $this->db->error);
+        }
+
+        $success = $stmt->bind_param("ii", $limit, $offset);
+        if (!$success) {
+            throw new Exception("Erro ao ligar parâmetro: " . $stmt->error);
+        }
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
         $this->db->close();
         if (!empty($result)) {
             $customers = [];
@@ -62,7 +75,11 @@ class CustomerRepository {
                         $row['email'], $row['cellphone'], $address);
                 $customers[] = $customer;
             }
-            return $customers;
+            
+            return [
+                'customers' => $customers,
+                'total_records' => $totalRecords
+            ];
         }
         return null;
     }
@@ -159,6 +176,14 @@ class CustomerRepository {
         $stmt->close();
 
         return true;
+    }
+
+    public function countAll(): int {
+        $query = "SELECT COUNT(id) 
+                    FROM customers
+                    WHERE active = true;";
+        $result = $this->db->query($query)->fetch_row();
+        return (int) $result[0];
     }
 
     public function existsById() {

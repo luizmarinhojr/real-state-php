@@ -15,9 +15,16 @@ final class CustomerController {
         $this->usecase = $usecase;
     }
 
-    final public function index(): void {
-        $customers = $this->usecase->index();
-        require_once VIEW . 'pages/main.php';
+    final public function all(): void {
+        $limit = 10;
+        $currentPage = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT) ?? 1;
+        if ($currentPage < 1) {
+            $currentPage = 1;
+        }
+        $offset = ($currentPage - 1) * $limit;
+        $customers = $this->usecase->getAll($limit, $offset);
+        $totalPages = ceil($customers['total_records'] / $limit);
+        require_once VIEW . 'pages/customers.php';
     }
 
     final public function create(): void {

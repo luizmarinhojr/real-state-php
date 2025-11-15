@@ -20,8 +20,8 @@ final class CustomerUsecase {
         $this->addressRepo = $addressRepo;
     }
 
-    public function index():?array {
-        $result = $this->customerRepo->fetchAll();
+    public function getAll(int $limit, int $offset):?array {
+        $result = $this->customerRepo->fetchAll($limit, $offset);
         if (!empty($result)) {
             return $result;
         }
