@@ -16,6 +16,7 @@ fieldset {
     margin-bottom: 20px;
     border-radius: 10px;
     border: 1px solid rgb(225, 225, 225);
+    flex-wrap: wrap;
 }
 
 #address-group.visible {
@@ -46,4 +47,5 @@ fieldset {
     display: flex;
     gap: 10px;
     flex-grow: 1;
+    flex-wrap: wrap;
 }
