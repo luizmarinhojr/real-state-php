@@ -53,6 +53,7 @@ class CustomerRepository {
                 FROM customers c 
                 LEFT JOIN addresses a ON c.id = a.id_customer
                 WHERE c.active = true 
+                ORDER BY COALESCE(c.modified_at, c.created_at) DESC
                 LIMIT ? OFFSET ?";
         $stmt = $this->db->prepare($query);
         if (!$stmt) {
