@@ -3,7 +3,7 @@ table {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     border-spacing: 0;
-    border: none; /* <-- Remova a borda externa da tabela */
+    border: none;
     width: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
 }
@@ -55,9 +55,6 @@ tbody tr:last-child td {
 
 .table-group {
     padding: 10px;
-    
-    border-radius: 15px; /* Mantenha este valor ou aumente-o se desejar mais curva */
-    /* Adicione overflow: hidden; para cortar qualquer conteúdo da tabela que vaze */
     overflow: hidden;
 }
 
