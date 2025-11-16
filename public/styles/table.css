@@ -1,11 +1,18 @@
 table {
-    width: 100%;
-    margin: 20px auto;
     border-collapse: collapse;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    overflow: hidden; 
+    border-spacing: 0;
+    border: none; /* <-- Remova a borda externa da tabela */
+    width: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+}
+
+.table-container {
+    margin-top: 20px;
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 10px;
 }
 
 thead {
@@ -22,7 +29,6 @@ th {
 
 td {
     padding: 10px 15px;
-    border-bottom: 1px solid #ddd;
     color: #333;
 }
 
@@ -49,7 +55,10 @@ tbody tr:last-child td {
 
 .table-group {
     padding: 10px;
-    border-radius: 15px;
+    
+    border-radius: 15px; /* Mantenha este valor ou aumente-o se desejar mais curva */
+    /* Adicione overflow: hidden; para cortar qualquer conteúdo da tabela que vaze */
+    overflow: hidden;
 }
 
 .table-actions {
