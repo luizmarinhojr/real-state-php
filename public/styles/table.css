@@ -82,6 +82,7 @@ tbody tr:last-child td {
 #pagination {
     display: flex;
     justify-content: center;
+    margin-top: 15px;
     gap: 10px;
 }
 
