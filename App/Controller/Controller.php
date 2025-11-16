@@ -11,10 +11,6 @@ final class Controller {
         return new CustomerController($usecase);
     }
 
-    public static function initHandlerError() {
-        return new HandlerErrorController();
-    }
-
     public static function initHome() {
         return new \App\Controller\HomeController();
     }

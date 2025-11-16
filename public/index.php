@@ -3,6 +3,7 @@
 
     use App\Controller\Controller;
     
+    date_default_timezone_set('America/Sao_Paulo');
     define('ROOT_PATH', dirname(__DIR__) . '/');
     define('VIEW', ROOT_PATH . '/App/view/');
     ini_set('display_errors', 1);
@@ -35,5 +36,5 @@
             Controller::initCustomer()->delete();
             
         default:
-            Controller::initHandlerError()->error404();
+            require_once VIEW . 'pages/404.php';;
     }

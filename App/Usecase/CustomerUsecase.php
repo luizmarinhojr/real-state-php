@@ -66,6 +66,10 @@ final class CustomerUsecase {
                 $this->addressRepo->update($customerModel->getAddress(), $addressId); 
             }
 
+            if ($addressId === null && $customerModel->getAddress() != null) {
+                $this->addressRepo->insert($customerModel->getAddress(), $customerId);
+            }
+
             $this->customerRepo->commit();
         } catch(Exception $e) {
             $this->customerRepo->rollback();
