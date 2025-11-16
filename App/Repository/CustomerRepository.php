@@ -154,17 +154,25 @@ class CustomerRepository {
         $stmt->close();
     }
     
-    public function delete(int $id): bool{
-        $query = "DELETE FROM customers WHERE id = ?;";
+    public function delete(int $idCustomer): bool{
+        $query = "UPDATE customers 
+                    SET 
+                        active = false,
+                        deleted_at = ?
+                    WHERE id = ?;";
 
         $stmt = $this->db->prepare($query);
         if (!$stmt) {
             return false;
         }
 
+        $deletedAtDateTime = new DateTimeImmutable('now');
+        $deletedAt = $deletedAtDateTime->format('Y-m-d H:i:s');
+
         $stmt->bind_param(
-            'i',
-            $id
+            'si',
+            $deletedAt,
+            $idCustomer
         );
 
         $success = $stmt->execute();

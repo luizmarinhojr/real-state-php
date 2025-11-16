@@ -82,7 +82,12 @@ final class CustomerUsecase {
     }
 
     public function delete(int $id): bool {
-        return $this->customerRepo->delete($id);
+        $successCustomer = $this->customerRepo->delete($id);
+        $successAddress = $this->addressRepo->delete($id);
+        if ($successCustomer && $successAddress) {
+            return true;
+        }
+        return false;
     }
 
     private function convertToDtoResponse(CustomerModel $customer): CustomerDtoResponse {

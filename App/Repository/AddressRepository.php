@@ -89,4 +89,36 @@ final class AddressRepository {
 
         $stmt->close();
     }
+
+    public function delete(int $idCustomer): bool{
+        $query = "UPDATE addresses 
+                    SET 
+                        active = false,
+                        deleted_at = ?
+                    WHERE id_customer = ?;";
+
+        $stmt = $this->db->prepare($query);
+        if (!$stmt) {
+            return false;
+        }
+
+        $deletedAtDateTime = new DateTimeImmutable('now');
+        $deletedAt = $deletedAtDateTime->format('Y-m-d H:i:s');
+
+        $stmt->bind_param(
+            'si',
+            $deletedAt,
+            $idCustomer
+        );
+
+        $success = $stmt->execute();
+        
+        if (!$success) {
+            return false;
+        }
+
+        $stmt->close();
+
+        return true;
+    }
 }
