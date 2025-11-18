@@ -2,7 +2,7 @@ services:
   db:
     image: mysql:8.0.44-debian
     container_name: mysql_real_state
-    restart: always
+    restart: no
     environment:
       MYSQL_ROOT_PASSWORD: myfirstpassword
       LANG: C.UTF-8
@@ -23,7 +23,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: php_app
-    restart: always
+    restart: no
     environment:
       TZ: America/Sao_Paulo
     working_dir: /var/www/html
@@ -33,7 +33,7 @@ services:
   web:
     image: nginx:stable-alpine
     container_name: nginx_web
-    restart: always
+    restart: no
     ports:
       - "80:80"
     volumes:
