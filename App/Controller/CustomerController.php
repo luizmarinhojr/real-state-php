@@ -52,7 +52,8 @@ final class CustomerController {
             header("Location: /clientes");
             exit;
         }
-        require_once VIEW . 'pages/400.php';
+        $customer = new CustomerDtoResponse();
+        require_once VIEW . 'pages/create.php';
     }
 
     final public function detail(): void {
