@@ -14,4 +14,11 @@ final class Controller {
     public static function initHome() {
         return new \App\Controller\HomeController();
     }
+
+    public static function initAuth() {
+        $db = \Config\Database::connect();
+        $authRepo = new \App\Repository\AuthRepository($db);
+        $authUsecase = new \App\Usecase\AuthUsecase($authRepo);
+        return new \App\Controller\AuthController($authUsecase);
+    }
 }

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BrokMint - Clientes Cadastrados</title>
-    <link rel="stylesheet" href="./styles/main.css">
-    <link rel="stylesheet" href="./styles/variables.css">
-    <link rel="stylesheet" href="./styles/home.css">
+    <title>BrokMint - Seu CRM favorito</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/variables.css">
+    <link rel="stylesheet" href="styles/home.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
     <main class="fade-in-animation" id="main">
         <div class="container-fluid">
             <div class="container">
-                <h1>Bem-vindo a <span style="color: blue;">BROKER</span></h1>
+                <h1>Bem-vindo a <span style="color: var(--primary-color);">BROKER</span></h1>
             </div>
         </div>
         

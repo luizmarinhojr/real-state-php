@@ -4,6 +4,17 @@ CREATE DATABASE IF NOT EXISTS real_state
 
 USE real_state;
 
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT NOT NULL,
+    email VARCHAR(254) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL,
+    modified_at TIMESTAMP NULL,
+    deleted_at TIMESTAMP NULL,
+    PRIMARY KEY(id)
+);
+
 CREATE TABLE IF NOT EXISTS customers (
     id INT AUTO_INCREMENT NOT NULL,
     first_name VARCHAR(40) NOT NULL,
@@ -11,7 +22,7 @@ CREATE TABLE IF NOT EXISTS customers (
     cpf VARCHAR(11) UNIQUE,
     birth_date DATE,
     cellphone VARCHAR(15),
-    email varchar(254),
+    email varchar(254) UNIQUE,
     active BOOLEAN NOT NULL DEFAULT TRUE,
     created_at TIMESTAMP NOT NULL,
     modified_at TIMESTAMP NULL,

@@ -15,7 +15,7 @@ final class CustomerController {
         $this->usecase = $usecase;
     }
 
-    final public function all(): void {
+    final public function list(): void {
         $limit = 10;
         $currentPage = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT) ?? 1;
         if ($currentPage < 1) {
@@ -28,28 +28,31 @@ final class CustomerController {
     }
 
     final public function create(): void {
-        $hasAddress = isset($_POST["address"]) ?? false;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $hasAddress = isset($_POST["address"]) ?? false;
 
-        try {
-            $customer = new CustomerDtoRequest($this->nullIfEmpty($_POST['first_name']), 
-                $this->nullIfEmpty($_POST['last_name']), $this->nullIfEmpty($_POST['cpf']), 
-                $this->nullIfEmpty($_POST['birth_date']), $this->nullIfEmpty($_POST['email']), 
-                $this->nullIfEmpty($_POST['cellphone']), null);
+            try {
+                $customer = new CustomerDtoRequest($this->nullIfEmpty($_POST['first_name']), 
+                    $this->nullIfEmpty($_POST['last_name']), $this->nullIfEmpty($_POST['cpf']), 
+                    $this->nullIfEmpty($_POST['birth_date']), $this->nullIfEmpty($_POST['email']), 
+                    $this->nullIfEmpty($_POST['cellphone']), null);
 
-            if ($hasAddress) {
-                $customer->setAddress(new AddressDtoRequest($this->nullIfEmpty($_POST['street']), 
-                    $this->nullIfEmpty($_POST['number']), $this->nullIfEmpty($_POST['complement']),
-                    $this->nullIfEmpty($_POST['neighborhood']), $this->nullIfEmpty($_POST['city']), 
-                    $this->nullIfEmpty($_POST['state']), $this->nullIfEmpty($_POST['cep'])));
+                if ($hasAddress) {
+                    $customer->setAddress(new AddressDtoRequest($this->nullIfEmpty($_POST['street']), 
+                        $this->nullIfEmpty($_POST['number']), $this->nullIfEmpty($_POST['complement']),
+                        $this->nullIfEmpty($_POST['neighborhood']), $this->nullIfEmpty($_POST['city']), 
+                        $this->nullIfEmpty($_POST['state']), $this->nullIfEmpty($_POST['cep'])));
+                }
+            } catch(TypeError $e) {
+                include VIEW . '/pages/400.php';
+                exit;
             }
-        } catch(TypeError $e) {
-            include VIEW . '/pages/400.php';
+
+            $customerResult = $this->usecase->create($customer);
+            header("Location: /clientes");
             exit;
         }
-
-        $customerResult = $this->usecase->create($customer);
-        header("Location: /clientes");
-        exit;
+        require_once VIEW . 'pages/400.php';
     }
 
     final public function detail(): void {

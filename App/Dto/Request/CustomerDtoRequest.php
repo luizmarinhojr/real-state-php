@@ -2,7 +2,7 @@
 
 namespace App\Dto\Request;
 
-use Exception, DateTimeImmutable;
+use Exception;
 
 final class CustomerDtoRequest {
     private string $firstName;

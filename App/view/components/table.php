@@ -35,7 +35,7 @@
                                 <td><?= $customer->getEmail() ?></td>
                                 <td><?= $customer->getBirthDate() ?></td>
                                 <td  class="table-actions" colspan="2">
-                                    <a class="action-icon" href="<?= 'clientes/cadastrar?id=' . $customer->getId() ?>">
+                                    <a class="action-icon" href="<?= 'clientes/detalhar?id=' . $customer->getId() ?>">
                                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>

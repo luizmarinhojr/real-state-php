@@ -2,10 +2,13 @@
     require_once '../vendor/autoload.php';
 
     use App\Controller\Controller;
+
+    session_start();
     
     date_default_timezone_set('America/Sao_Paulo');
     define('ROOT_PATH', dirname(__DIR__) . '/');
     define('VIEW', ROOT_PATH . '/App/view/');
+
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
@@ -15,17 +18,21 @@
         case '/':
             Controller::initHome()->home();
             break;
+        
+        case '/login':
+            Controller::initAuth()->login();
+            break;
 
         case '/clientes':
-            Controller::initCustomer()->all();
+            Controller::initCustomer()->list();
+            break;
+
+        case '/clientes/detalhar':
+            Controller::initCustomer()->detail();
             break;
 
         case '/clientes/cadastrar':
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                Controller::initCustomer()->create();
-            } else {
-                Controller::initCustomer()->detail();
-            }
+            Controller::initCustomer()->create();
             break;
 
         case '/clientes/atualizar':
