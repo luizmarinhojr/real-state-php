@@ -13,8 +13,22 @@ final class AuthUsecase
         $this->authRepository = $authRepository;
     }
 
-    public function login(string $username, string $password): bool 
+    public function signin(string $username, string $password): ?int 
     {
-        return true;
+        if (strlen($password) >= 8) {
+            $userRow = $this->authRepository->getByEmail($username);
+            if (!$userRow) {
+                return null;
+            }
+            $passwordHash = $userRow['password_hash'];
+            $userId = $userRow['id'];
+
+            if (password_verify($password, $passwordHash)) {
+                return $userId;
+            }
+
+            return null;
+        }
+        return false;
     }
 }

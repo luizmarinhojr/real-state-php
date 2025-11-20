@@ -14,7 +14,7 @@ final class AuthController
         $this->authUsecase = $authUsecase;
     }
 
-    public function login() 
+    public function signin() 
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!isset($_POST['email'], $_POST['password'])) {
@@ -23,12 +23,29 @@ final class AuthController
             }
             try {
                 $user = new UserDtoRequest($_POST['email'], $_POST['password']);
-                $isSuccess = $this->authUsecase->login($user->getEmail(), $user->getPassword());
+                $userId = $this->authUsecase->signin($user->getEmail(), $user->getPassword());
+                if ($userId) {
+                    $_SESSION['user_id'] = $userId;
+                    $_SESSION['user_logged_in'] = true;
+                    
+                    header("Location: /dashboard");
+                    exit;
+                } else {
+                    $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Credenciais inválidas.'];
+                }
             } catch (\Exception $e) {
-                require_once VIEW . 'pages/400.php';
+                $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Erro interno. Tente novamente.'];
             }
             exit;
         }
         require_once VIEW . 'pages/login.php';
+    }
+
+    public function signup() 
+    {
+        if ($_SERVER[''] === 'POST') {
+            exit;
+        }
+        require_once VIEW . 'pages/signup.php';
     }
 }

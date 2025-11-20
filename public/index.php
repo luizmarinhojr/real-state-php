@@ -20,7 +20,7 @@
             break;
         
         case '/login':
-            Controller::initAuth()->login();
+            Controller::initAuth()->signin();
             break;
 
         case '/clientes':
