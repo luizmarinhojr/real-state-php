@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BrokMint - Login</title>
     <link rel="stylesheet" href="styles/variables.css">
-    <link rel="stylesheet" href="styles/login.css">
+    <link rel="stylesheet" href="styles/signin.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
@@ -23,7 +23,7 @@
                 <h1>Bem-vindo a BrokMint</h1>
                 <p>Faça login para acessar o dashboard</p>
             </div>
-            <form action="" method="POST">
+            <form action="/login" method="POST">
                 <div class="form-container">
                     <label for="email">E-mail:</label>
                     <input type="email" placeholder="Digite seu e-mail" name="email" id="email">
@@ -35,6 +35,9 @@
                 </div>
                 <input type="submit" value="Entrar">
             </form>
+            <div class="signup">
+                <p>Não tem uma conta? <a href="cadastrar">Cadastre-se aqui</a></p>
+            </div>
         </div>
     </main>
 

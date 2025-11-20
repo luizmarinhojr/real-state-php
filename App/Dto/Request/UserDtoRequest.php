@@ -33,11 +33,21 @@ final class UserDtoRequest
             } else {
                 throw new Exception("Email is not valid", 400);
             }
-        } 
+        } else {
+            throw new Exception("Email is empty",400);
+        }
     }
 
-    public function setPassword(?string $passwordHash): void 
+    public function setPassword(?string $password): void 
     {
-        $this->passwordHash = $passwordHash;
+        if (!empty($password)) {
+            if (strlen($password) >= 8 && strlen($password) <= 30) {
+                $this->passwordHash = $password;
+            } else {
+                throw new Exception("Email is not valid", 400);
+            }
+        } else {
+            throw new Exception("Email is empty",400);
+        }
     }
 }

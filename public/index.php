@@ -22,6 +22,10 @@
         case '/login':
             Controller::initAuth()->signin();
             break;
+        
+        case '/cadastrar':
+            Controller::initAuth()->signup();
+            break;
 
         case '/clientes':
             Controller::initCustomer()->list();

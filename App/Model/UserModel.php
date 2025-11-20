@@ -70,7 +70,7 @@ final class UserModel
                 throw new Exception("Email is not valid", 400);
             }
         } else {
-            $this->email = $email;
+            throw new Exception("Password is not valid", 400);
         }
     }
 

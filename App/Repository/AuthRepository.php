@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Model\UserModel;
 use mysqli;
 
 final class AuthRepository 
@@ -27,4 +28,26 @@ final class AuthRepository
         return $result->fetch_assoc();
     }
 
+    public function insert(UserModel $userModel): ?int 
+    {
+        $query = 'INSERT INTO users (email, password_hash, created_at) VALUES (?, ?, ?);';
+        $stmt = $this->db->prepare($query);
+        if (!$stmt) {
+            return null;
+        }
+        $types = "sss";
+        $stmt->bind_param(
+            $types, 
+            $userModel->email, 
+            $userModel->passwordHash, 
+            $userModel->createdAt
+        );
+        $success = $stmt->execute();
+        if (!$success) {
+            return null;
+        }
+        $insertedId = $this->db->insert_id;
+        $stmt->close();
+        return $insertedId;
+    }
 }
