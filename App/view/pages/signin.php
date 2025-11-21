@@ -20,7 +20,6 @@
         <div class="container-fluid-login">
             <div class="text-intro" style="display: flex; flex-direction: column; align-items: center;">
                 <img src="../assets/broker-logo.png" alt="Logo BrokMint" width="150px">
-                <h1>Bem-vindo a BrokMint</h1>
                 <p>Faça login para acessar o dashboard</p>
             </div>
             <form action="/login" method="POST">
@@ -36,7 +35,7 @@
                 <input type="submit" value="Entrar">
             </form>
             <div class="signup">
-                <p>Não tem uma conta? <a href="cadastrar">Cadastre-se aqui</a></p>
+                <p class="create-account">Não tem uma conta? <a href="cadastrar">Cadastre-se aqui</a></p>
             </div>
         </div>
     </main>

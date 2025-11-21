@@ -21,8 +21,7 @@
         <div class="container-fluid-login">
             <div class="text-intro" style="display: flex; flex-direction: column; align-items: center;">
                 <img src="../assets/broker-logo.png" alt="Logo BrokMint" width="150px">
-                <h1>Bem-vindo a BrokMint</h1>
-                <p>Cadastre-se agora/p>
+                <p>Cadastre-se agora</p>
             </div>
             <form action="/cadastrar" method="POST">
                 <div class="form-container">

@@ -28,6 +28,7 @@ final class AuthController
                     $_SESSION['user_id'] = $userId;
                     $_SESSION['user_logged_in'] = true;
                     
+                    $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Logado com sucesso.'];
                     header("Location: /");
                     exit;
                 } else {

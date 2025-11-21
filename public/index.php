@@ -12,7 +12,18 @@
     ini_set('display_errors', 1);
     error_reporting(E_ALL);
 
+    $publicRoutes = [
+        '/login',
+        '/cadastrar',
+        '/logout'
+    ];
+
     $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+    if (!in_array($requestUri, $publicRoutes) && !Controller::isAuthenticated()) {
+        header("Location: /login"); 
+        exit;
+    }
 
     switch ($requestUri) {
         case '/':

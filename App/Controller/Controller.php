@@ -21,4 +21,8 @@ final class Controller {
         $authUsecase = new \App\Usecase\AuthUsecase($authRepo);
         return new \App\Controller\AuthController($authUsecase);
     }
+
+    public static function isAuthenticated(): bool {
+        return isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true;
+    }
 }

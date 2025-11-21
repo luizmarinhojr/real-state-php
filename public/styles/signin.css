@@ -68,7 +68,7 @@ h1 {
 }
 
 p {
-    font-size: 0.95rem;
+    font-size: 1rem;
     margin: 5px 0 5px 0;
 }
 
@@ -82,8 +82,11 @@ form {
 .form-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 5px;
+}
+
+label {
+    margin-left: 13px;
 }
 
 input[type="email"], input[type="password"], input[type="submit"] {
@@ -94,7 +97,6 @@ input[type="email"], input[type="password"], input[type="submit"] {
     display: flex;
     flex-grow: 1;
     width: 100%;
-    text-align: center;
     outline: none;
 }
 
@@ -109,6 +111,10 @@ input[type="email"]:focus, input[type="password"]:focus {
 }
 
 label {
+    font-size: 0.9rem;
+}
+
+.create-account {
     font-size: 0.9rem;
 }
 

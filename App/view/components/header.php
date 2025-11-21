@@ -11,6 +11,7 @@
                     <li><a>Início</a></li>
                     <li><a>Clientes</a></li>
                     <li><a>Info</a></li>
+                    <li><a>Usuário</a></li>
                 </ul>
             </nav>
         </div>

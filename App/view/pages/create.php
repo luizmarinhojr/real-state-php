@@ -13,6 +13,7 @@
 </head>
 <body>
     <?php include VIEW . "components/header.php"; ?>
+    <?php include VIEW . "components/flash_message.php" ?>
     <main class="fade-in-animation" id="main">
         <div class="container-fluid">
             <?php include VIEW . "components/form.php"; ?>
