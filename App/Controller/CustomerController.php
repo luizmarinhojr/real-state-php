@@ -6,6 +6,7 @@ use App\Dto\Request\AddressDtoRequest;
 use App\Dto\Response\CustomerDtoResponse;
 use App\Usecase\CustomerUsecase;
 use App\Dto\Request\CustomerDtoRequest;
+use Exception;
 use TypeError;
 
 final class CustomerController {
@@ -29,28 +30,17 @@ final class CustomerController {
 
     final public function create(): void {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $hasAddress = isset($_POST["address"]) ?? false;
-
             try {
-                $customer = new CustomerDtoRequest($this->nullIfEmpty($_POST['first_name']), 
-                    $this->nullIfEmpty($_POST['last_name']), $this->nullIfEmpty($_POST['cpf']), 
-                    $this->nullIfEmpty($_POST['birth_date']), $this->nullIfEmpty($_POST['email']), 
-                    $this->nullIfEmpty($_POST['cellphone']), null);
-
-                if ($hasAddress) {
-                    $customer->setAddress(new AddressDtoRequest($this->nullIfEmpty($_POST['street']), 
-                        $this->nullIfEmpty($_POST['number']), $this->nullIfEmpty($_POST['complement']),
-                        $this->nullIfEmpty($_POST['neighborhood']), $this->nullIfEmpty($_POST['city']), 
-                        $this->nullIfEmpty($_POST['state']), $this->nullIfEmpty($_POST['cep'])));
-                }
-            } catch(TypeError $e) {
-                include VIEW . '/pages/400.php';
+                $customerRequest = $this->validatingRequest();
+                $customerResult = $this->usecase->create($customerRequest);
+                $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Cliente cadastrado com sucesso.'];
+                header("Location: /clientes");
+                exit;
+            } catch(Exception $e) {
+                $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Credenciais inválidas.'];
+                header("Location: /clientes/cadastrar");
                 exit;
             }
-
-            $customerResult = $this->usecase->create($customer);
-            header("Location: /clientes");
-            exit;
         }
         $customer = new CustomerDtoResponse();
         require_once VIEW . 'pages/create.php';
@@ -68,7 +58,8 @@ final class CustomerController {
         $customer = $this->validatingRequest();
         $customerId = (int) $_POST['id'];
         if ($customerId === 0) {
-            include VIEW . '/pages/400.php';
+            $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'ID de cliente inválido!'];
+            header("Location: /clientes");
             exit;
         }
         $addressId = null;
@@ -76,6 +67,7 @@ final class CustomerController {
             $addressId = (int) $_POST['id-address'];
         }
         $this->usecase->update($customer, $customerId, $addressId);
+        $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Cliente cadastrado com sucesso.'];
         header("Location: /clientes");
         exit;
     }

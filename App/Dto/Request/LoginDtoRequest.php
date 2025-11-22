@@ -1,32 +1,18 @@
-<?php 
+<?php
 
 namespace App\Dto\Request;
 
 use Exception;
 
-final class UserDtoRequest 
+final class LoginDtoRequest
 {
-    private string $firstName;
-    private string $lastName;
     private string $email;
-    private string $password;
+    private string $passwordHash;
 
-    public function __construct(string $firstName, string $lastName, string $email, string $password) 
+    public function __construct(string $email, string $passwordHash) 
     {
-        $this->setFirstName($firstName);
-        $this->setLastName($lastName);
         $this->setEmail($email);
-        $this->setPassword($password);
-    }
-
-    public function getFirstName(): string 
-    {
-        return $this->firstName;
-    }
-
-    public function getLastName(): string 
-    {
-        return $this->lastName;
+        $this->setPassword($passwordHash);
     }
 
     public function getEmail(): ?string 
@@ -36,17 +22,7 @@ final class UserDtoRequest
 
     public function getPassword(): ?string 
     {
-        return $this->password;
-    }
-
-    public function setFirstName(string $firstName): void 
-    {
-        $this->firstName = $firstName;
-    }
-
-    public function setLastName(string $lastName): void 
-    {
-        $this->lastName = $lastName;
+        return $this->passwordHash;
     }
 
     public function setEmail(string $email): void 
@@ -66,7 +42,7 @@ final class UserDtoRequest
     {
         if (!empty($password)) {
             if (strlen($password) >= 8 && strlen($password) <= 30) {
-                $this->password = $password;
+                $this->passwordHash = $password;
             } else {
                 throw new Exception("Email is not valid", 400);
             }

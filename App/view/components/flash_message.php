@@ -38,10 +38,10 @@ if (isset($_SESSION['flash_message'])):
 
 <style>
     #flash-message {
-        position: relative;
+        position: fixed;
         padding: 15px;
-        margin-bottom: 20px;
-        border-radius: 4px;
+        margin: 20px;
+        border-radius: 15px;
         color: #fff;
         display: flex;
         justify-content: space-between;
@@ -49,6 +49,10 @@ if (isset($_SESSION['flash_message'])):
         opacity: 1; 
         transition: opacity 0.5s ease-out; 
         overflow: hidden;
+        z-index: 8;
+        min-width: 1300px;
+        left: 50%;
+        transform: translateX(-50%);
     }
     
     .flash-error {

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BrokMint - Login</title>
+    <title>BrokMint - Cadastro</title>
     <link rel="stylesheet" href="styles/variables.css">
     <link rel="stylesheet" href="styles/signin.css">
     <link rel="stylesheet" href="styles/signup.css">
@@ -24,6 +24,16 @@
                 <p>Cadastre-se agora</p>
             </div>
             <form action="/cadastrar" method="POST">
+                <div class="form-container">
+                    <label for="first_name">Nome:</label>
+                    <input type="text" placeholder="Digite seu nome" name="first_name" id="first_name">
+                </div>
+
+                <div class="form-container">
+                    <label for="last_name">Sobrenome:</label>
+                    <input type="text" placeholder="Digite seu sobrenome" name="last_name" id="last_name">
+                </div>
+
                 <div class="form-container">
                     <label for="email">E-mail:</label>
                     <input type="email" placeholder="Digite seu e-mail" name="email" id="email">

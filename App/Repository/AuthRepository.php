@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Model\UserModel;
-use mysqli;
+use mysqli, Exception;
 
 final class AuthRepository 
 {
@@ -16,7 +16,7 @@ final class AuthRepository
 
     public function getByEmail(string $email): ?array
     {
-        $query = 'SELECT id, email, password_hash FROM users WHERE email = ?';
+        $query = 'SELECT id, first_name, email, password_hash FROM users WHERE email = ?;';
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('s', $email);
         $stmt->execute();
@@ -30,21 +30,23 @@ final class AuthRepository
 
     public function insert(UserModel $userModel): ?int 
     {
-        $query = 'INSERT INTO users (email, password_hash, created_at) VALUES (?, ?, ?);';
+        $query = 'INSERT INTO users (first_name, last_name, email, password_hash, created_at) VALUES (?, ?, ?, ?, ?);';
         $stmt = $this->db->prepare($query);
         if (!$stmt) {
-            return null;
+            throw new Exception('Erro interno na criação do Usuário');
         }
-        $types = "sss";
+        $types = "sssss";
         $stmt->bind_param(
             $types, 
+            $userModel->firstName,
+            $userModel->lastName,
             $userModel->email, 
             $userModel->passwordHash, 
             $userModel->createdAt
         );
         $success = $stmt->execute();
         if (!$success) {
-            return null;
+            throw new Exception('Erro interno na criação do Usuário');
         }
         $insertedId = $this->db->insert_id;
         $stmt->close();

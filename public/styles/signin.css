@@ -89,7 +89,7 @@ label {
     margin-left: 13px;
 }
 
-input[type="email"], input[type="password"], input[type="submit"] {
+input[type="email"], input[type="password"], input[type="submit"], input[type="text"] {
     font-size: 1.1rem;
     padding: 10px 10px;
     border-radius: 15px;
@@ -106,7 +106,7 @@ input[type="submit"]  {
     color: var(--white);
 }
 
-input[type="email"]:focus, input[type="password"]:focus {
+input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focus  {
     outline: 2px solid var(--primary-color);
 }
 

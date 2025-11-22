@@ -7,6 +7,8 @@ use DateTimeImmutable, Exception;
 final class UserModel 
 {
     public ?int $id;
+    public string $firstName;
+    public string $lastName;
     public string $email;
     public string $passwordHash;
     public ?bool $active;
@@ -14,10 +16,12 @@ final class UserModel
     public ?string $modifiedAt;
     public ?string $deletedAt;
 
-    public function __construct(?int $id, string $email, string $passwordHash, ?bool $active = null, ?string $createdAt = null, 
+    public function __construct(?int $id, string $firstName, string $lastName, string $email, string $passwordHash, ?bool $active = null, ?string $createdAt = null, 
         ?string $modifiedAt = null, ?string $deletedAt = null) 
     {
         $this->setId($id);
+        $this->setFirstName($firstName);
+        $this->setLastName($lastName);
         $this->setEmail($email);
         $this->setPassword($passwordHash);
         $this->setActive($active);
@@ -29,6 +33,16 @@ final class UserModel
     public function getId(): int 
     {
         return $this->id;
+    }
+
+    public function getFirstName(): string 
+    {
+            return $this->firstName;
+    }
+
+    public function getLastName(): string 
+    {
+        return $this->lastName;
     }
 
     public function getEmail(): ?string 
@@ -59,6 +73,16 @@ final class UserModel
     private function setId(?int $id): void 
     {
         $this->id = $id;
+    }
+
+    public function setFirstName(string $firstName): void 
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function setLastName(string $lastName): void 
+    {
+        $this->lastName = $lastName;
     }
 
     public function setEmail(string $email): void 

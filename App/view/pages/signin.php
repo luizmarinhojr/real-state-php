@@ -14,6 +14,7 @@
 </head>
 
 <body>
+    <?php include VIEW . "components/flash_message.php" ?>
     <main class="fade-in-animation" id="main">
         <div class="background-blur-overlay height100"></div>
 

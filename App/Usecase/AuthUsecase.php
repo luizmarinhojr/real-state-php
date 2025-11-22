@@ -2,8 +2,10 @@
 
 namespace App\Usecase;
 
+use App\Dto\Response\UserDtoResponse;
 use App\Model\UserModel;
 use App\Repository\AuthRepository;
+use App\Dto\Request\UserDtoRequest;
 
 final class AuthUsecase 
 {
@@ -14,26 +16,27 @@ final class AuthUsecase
         $this->authRepository = $authRepository;
     }
 
-    public function signin(string $username, string $password): ?int 
+    public function signin(string $username, string $password): ?UserDtoResponse 
     {
         $userRow = $this->authRepository->getByEmail($username);
         if (!$userRow) {
             return null;
         }
         $passwordHash = $userRow['password_hash'];
-        $userId = $userRow['id'];
 
         if (password_verify($password, $passwordHash)) {
-            return $userId;
+            $user = new UserDtoResponse($userRow['id'], $userRow['first_name'], null, $userRow['email']);
+            return $user;
         }
 
         return null;
     }
 
-    public function signup(string $email, string $password): ?int 
+    public function signup(UserDtoRequest $userRequest): ?int 
     {
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-        $userModel = new UserModel(null, $email, $passwordHash);
+        $passwordHash = password_hash($userRequest->getPassword(), PASSWORD_DEFAULT);
+        $userModel = new UserModel(null, $userRequest->getFirstName(), 
+                    $userRequest->getLastName(), $userRequest->getEmail(), $passwordHash);
         $userId = $this->authRepository->insert($userModel);
         if ($userId) {
             return $userId;
