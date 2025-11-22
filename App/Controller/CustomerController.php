@@ -37,7 +37,7 @@ final class CustomerController {
                 header("Location: /clientes");
                 exit;
             } catch(Exception $e) {
-                $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Credenciais inválidas.'];
+                $_SESSION['flash_message'] = ['type' => 'error', 'message' => $e->getMessage()];
                 header("Location: /clientes/cadastrar");
                 exit;
             }

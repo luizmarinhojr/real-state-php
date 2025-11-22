@@ -8,10 +8,9 @@
         <div class="right">
             <nav>
                 <ul class="menu">
-                    <li><a>Início</a></li>
-                    <li><a>Clientes</a></li>
-                    <li><a>Info</a></li>
-                    <li><a>Usuário</a></li>
+                    <li class="item-menu"><a href="/">Início</a></li>
+                    <li class="item-menu"><a href="/clientes">Clientes</a></li>
+                    <li class="menu-user"><a>Olá, <?= $_SESSION['user_first_name'] ?><img src="/assets/user-svg-icon.svg" width="25px" /> </a></li>
                 </ul>
             </nav>
         </div>

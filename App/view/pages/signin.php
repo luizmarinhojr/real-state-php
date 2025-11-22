@@ -25,13 +25,13 @@
             </div>
             <form action="/login" method="POST">
                 <div class="form-container">
-                    <label for="email">E-mail:</label>
-                    <input type="email" placeholder="Digite seu e-mail" name="email" id="email">
+                    <label for="email">E-mail: <span style="color: red;">*</span></label>
+                    <input type="email" placeholder="Digite seu e-mail" name="email" id="email" required>
                 </div>
                 
                 <div class="form-container">
-                    <label for="password">Senha:</label>
-                    <input type="password" placeholder="Digite sua senha" name="password" id="password">
+                    <label for="password">Senha: <span style="color: red;">*</span></label>
+                    <input type="password" placeholder="Digite sua senha" name="password" id="password" required>
                 </div>
                 <input type="submit" value="Entrar">
             </form>

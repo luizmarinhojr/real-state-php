@@ -25,27 +25,27 @@
             </div>
             <form action="/cadastrar" method="POST">
                 <div class="form-container">
-                    <label for="first_name">Nome:</label>
-                    <input type="text" placeholder="Digite seu nome" name="first_name" id="first_name">
+                    <label for="first_name">Nome: <span style="color: red;">*</span></label>
+                    <input type="text" placeholder="Digite seu nome" name="first_name" id="first_name" required>
                 </div>
 
                 <div class="form-container">
-                    <label for="last_name">Sobrenome:</label>
-                    <input type="text" placeholder="Digite seu sobrenome" name="last_name" id="last_name">
+                    <label for="last_name">Sobrenome: <span style="color: red;">*</span></label>
+                    <input type="text" placeholder="Digite seu sobrenome" name="last_name" id="last_name" required>
                 </div>
 
                 <div class="form-container">
-                    <label for="email">E-mail:</label>
-                    <input type="email" placeholder="Digite seu e-mail" name="email" id="email">
+                    <label for="email">E-mail: <span style="color: red;">*</span></label>
+                    <input type="email" placeholder="Digite seu e-mail" name="email" id="email" required>
                 </div>
                 
                 <div class="form-container">
-                    <label for="password">Senha:</label>
-                    <input type="password" placeholder="Digite sua senha" name="password" id="password">
+                    <label for="password">Senha: <span style="color: red;">*</span></label>
+                    <input type="password" placeholder="Digite sua senha" name="password" id="password" required>
                 </div>
                 <div class="form-container">
-                    <label for="password">Confirme sua senha</label>
-                    <input type="password" placeholder="Digite sua senha novamente" name="password-confirm" id="password-confirm" onkeyup="checkPasswords()">
+                    <label for="password">Confirme sua senha <span style="color: red;">*</span></label>
+                    <input type="password" placeholder="Digite sua senha novamente" name="password-confirm" id="password-confirm" onkeyup="checkPasswords()" required>
                 </div>
                 <input type="submit" value="Cadastrar" id="signup-button" disabled>
             </form>
