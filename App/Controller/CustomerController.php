@@ -37,7 +37,7 @@ final class CustomerController {
                 $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Cliente cadastrado com sucesso.'];
                 header("Location: /clientes");
                 exit;
-            } catch(Exception $e) {
+            } catch(Throwable $e) {
                 $_SESSION['flash_message'] = ['type' => 'error', 'message' => $e->getMessage()];
                 header("Location: /clientes/cadastrar");
                 exit;

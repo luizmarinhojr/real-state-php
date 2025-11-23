@@ -6,6 +6,7 @@ use App\Dto\Request\LoginDtoRequest;
 use App\Dto\Request\UserDtoRequest;
 use App\Usecase\AuthUsecase;
 use Exception;
+use Throwable;
 
 final class AuthController 
 {
@@ -38,7 +39,7 @@ final class AuthController
                     $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Credenciais inválidas.'];
                     header("Location: /login");
                 }
-            } catch (\Exception $e) {
+            } catch (Throwable $e) {
                 $_SESSION['flash_message'] = ['type' => 'error', 'message' => $e->getMessage()];
                 header("Location: /login");
             }
@@ -69,7 +70,7 @@ final class AuthController
                 }
                 $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'Erro ao criar usuário.'];
                 header("Location: /cadastrar");
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 $_SESSION['flash_message'] = ['type' => 'error', 'message' => $e->getMessage()];
                 header("Location: /login");
             }
