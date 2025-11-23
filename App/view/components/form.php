@@ -18,9 +18,9 @@
 
         <?php if ($customer->getAddress() != null): ?>
             <input type="hidden" name="id-address" value="<?= $customer->getAddress()->getId()?>">
-            <input type="checkbox" name="address" id="address" onchange="toogleAddressGroup()" checked>
+            <input type="checkbox" name="address" id="address" checked>
         <?php else: ?>
-            <input type="checkbox" name="address" id="address" onchange="toogleAddressGroup()">
+            <input type="checkbox" name="address" id="address">
         <?php endif ?>
 
         <div id="address-group" class="hide">

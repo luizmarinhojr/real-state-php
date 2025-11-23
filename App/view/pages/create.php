@@ -20,6 +20,7 @@
         </div>
     </main>
     <?php include VIEW . "components/footer.php"; ?>
+    <script src="https://unpkg.com/imask"></script>
     <script src="../scripts/main.js"></script>
     <script src="../scripts/form.js" defer></script>
     <script src="../scripts/cep-api.js" defer></script>

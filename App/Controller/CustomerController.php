@@ -4,10 +4,11 @@ namespace App\Controller;
 
 use App\Dto\Request\AddressDtoRequest;
 use App\Dto\Response\CustomerDtoResponse;
+use App\Helper\StringHelper;
 use App\Usecase\CustomerUsecase;
 use App\Dto\Request\CustomerDtoRequest;
 use Exception;
-use TypeError;
+use Throwable;
 
 final class CustomerController {
     private readonly CustomerUsecase $usecase;
@@ -55,21 +56,25 @@ final class CustomerController {
     }
 
     final public function update():void {
-        $customer = $this->validatingRequest();
-        $customerId = (int) $_POST['id'];
-        if ($customerId === 0) {
-            $_SESSION['flash_message'] = ['type' => 'error', 'message' => 'ID de cliente inválido!'];
+        try {
+            $customer = $this->validatingRequest();
+            $customerId = (int) $_POST['id'];
+            if ($customerId === 0) {
+                throw new Exception('ID de cliente inválido!');
+            }
+            $addressId = null;
+            if (isset($_POST['id-address'])) {
+                $addressId = (int) $_POST['id-address'];
+            }
+            $this->usecase->update($customer, $customerId, $addressId);
+            $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Cliente cadastrado com sucesso.'];
+            header("Location: /clientes");
+            exit;
+        } catch (Throwable $e) {
+            $_SESSION['flash_message'] = ['type' => 'error', 'message' => $e->getMessage()];
             header("Location: /clientes");
             exit;
         }
-        $addressId = null;
-        if (isset($_POST['id-address'])) {
-            $addressId = (int) $_POST['id-address'];
-        }
-        $this->usecase->update($customer, $customerId, $addressId);
-        $_SESSION['flash_message'] = ['type' => 'success', 'message' => 'Cliente cadastrado com sucesso.'];
-        header("Location: /clientes");
-        exit;
     }
 
     public function delete(): void {
@@ -86,29 +91,28 @@ final class CustomerController {
         exit;
     }
 
-    private function nullIfEmpty(string $object): ?string {
-        return $object === '' ? null : $object;
+    private function nullIfEmpty(string $field): ?string {
+        return $field === '' ? null : $field;
     }
 
     private function validatingRequest() {
         $hasAddress = isset($_POST["address"]) ?? false;
-        try {
-            $customer = new CustomerDtoRequest($this->nullIfEmpty($_POST['first_name']), 
-                $this->nullIfEmpty($_POST['last_name']), $this->nullIfEmpty($_POST['cpf']), 
-                $this->nullIfEmpty($_POST['birth_date']), $this->nullIfEmpty($_POST['email']), 
-                $this->nullIfEmpty($_POST['cellphone']), null);
 
-            if ($hasAddress) {
-                $customer->setAddress(new AddressDtoRequest($this->nullIfEmpty($_POST['street']), 
-                    $this->nullIfEmpty($_POST['number']), $this->nullIfEmpty($_POST['complement']),
-                    $this->nullIfEmpty($_POST['neighborhood']), $this->nullIfEmpty($_POST['city']), 
-                    $this->nullIfEmpty($_POST['state']), $this->nullIfEmpty($_POST['cep'])));
-            }
+        $customer = new CustomerDtoRequest($this->nullIfEmpty($_POST['first_name']), 
+            $this->nullIfEmpty($_POST['last_name']), 
+            $this->nullIfEmpty($_POST['cpf']) === null ? null : StringHelper::removeNonNumeric($_POST['cpf']), 
+            $this->nullIfEmpty($_POST['birth_date']), $this->nullIfEmpty($_POST['email']), 
+            $this->nullIfEmpty($_POST['cellphone']) === null ? null : StringHelper::removeNonNumeric($_POST['cellphone']),
+                null);
 
-            return $customer;
-        } catch(TypeError $e) {
-            include VIEW . '/pages/400.php';
-            exit;
+        if ($hasAddress) {
+            $customer->setAddress(new AddressDtoRequest($this->nullIfEmpty($_POST['street']), 
+                $this->nullIfEmpty($_POST['number']), $this->nullIfEmpty($_POST['complement']),
+                $this->nullIfEmpty($_POST['neighborhood']), $this->nullIfEmpty($_POST['city']), 
+                $this->nullIfEmpty($_POST['state']), 
+                $this->nullIfEmpty($_POST['cep']) === null ? null : StringHelper::removeNonNumeric($_POST['cep'])));
         }
+
+        return $customer;
     }
 }
