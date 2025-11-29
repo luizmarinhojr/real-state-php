@@ -1,0 +1,101 @@
+services:
+  # ===============================================
+  # 1. SERVIÇO DE BANCO DE DADOS (Managed Postgres)
+  #    Render recomenda usar Postgres gerenciado em vez de container MySQL
+  #    para persistência de dados em produção. 
+  #    Contudo, se você precisa usar MySQL, usaremos um MySQL gerenciado.
+  # ===============================================
+  - type: pserv # Tipo de serviço persistente (Banco de Dados)
+    name: real-state-db
+    plan: starter # Plano básico (ou use 'standard' dependendo da escala)
+    
+    # 🔑 Variáveis de ambiente que Render irá injetar no container PHP e no MySQL
+    # O Render criará o HOST, USER, PASS e DATABASE automaticamente
+    # Acessaremos essas variáveis no PHP via getenv()
+
+    # NOTA: Render gerencia volumes e redes, eliminando 'ports' e 'volumes' manuais
+    # NOTA: Para Docker Compose com MySQL, o Render prefere usar a URL de conexão
+    #       injete as credenciais como variáveis de ambiente para o PHP usar.
+    
+    # Este serviço irá provisionar um banco de dados gerenciado MySQL ou PostgreSQL.
+    # Se você for usar o container MySQL do compose, precisaria de um Persistent Disk,
+    # mas o Render recomenda serviços gerenciados para DBs.
+    
+  # ===============================================
+  # 2. SERVIÇO DE APLICAÇÃO PHP (Rodando PHP-FPM)
+  #    Isto é um Background Worker que o Nginx irá se conectar.
+  # ===============================================
+  - type: worker # Tipo worker, pois roda o PHP-FPM em segundo plano
+    name: php-fpm
+    # 🔑 O Render usa o Dockerfile que está no seu repositório para construir
+    #    a imagem.
+    dockerfilePath: infra/Dockerfile 
+    
+    # Regra de Build: Somente reconstruir se o Dockerfile ou o composer.json mudar
+    autoDeploy: true 
+    
+    # Define a porta do PHP-FPM (9000, conforme seu Dockerfile)
+    envVars:
+      - key: PORT
+        value: 9000
+      - key: DB_HOST
+        sync: false # Render irá injetar o HOST do serviço 'real-state-db'
+      - key: DB_USER
+        sync: false # Render irá injetar o USER do serviço 'real-state-db'
+      - key: DB_PASS
+        sync: false # Render irá injetar o PASS do serviço 'real-state-db'
+      - key: DB_DATABASE
+        sync: false # Render irá injetar o DATABASE do serviço 'real-state-db'
+      - key: TZ
+        value: America/Sao_Paulo
+      - key: PHP_INI_DATE_TIMEZONE
+        value: America/Sao_Paulo # Mantido para consistência
+    
+    # NOTA: O Render gerencia automaticamente as dependências de rede.
+    
+  # ===============================================
+  # 3. SERVIÇO WEB (Nginx/Front-end)
+  #    Este é o ponto de entrada público.
+  # ===============================================
+  - type: web # Tipo Web (recebe tráfego externo e gerencia a porta 80/443)
+    name: real-state-web
+    # Imagem base do Nginx, conforme seu compose
+    image: nginx:stable-alpine 
+    
+    # Porta exposta para o mundo (Render gerencia o mapeamento 80/443)
+    port: 80 
+    
+    # Comando de inicialização: Nginx
+    command: "nginx -g 'daemon off;'" 
+    
+    # Mapeamento do código e configuração
+    # Render usa 'sync' para manter o código do repo atualizado
+    # O arquivo de configuração do Nginx é copiado para o container
+    mounts:
+      - path: /etc/nginx/conf.d/default.conf
+        # O arquivo de configuração do Render está na raiz do repositório
+        # Adaptamos para que ele use o seu arquivo nginx.conf
+        content: |
+          server {
+              listen 80;
+              server_name localhost;
+              root /var/www/html/public;
+              index index.php index.html index.htm;
+              
+              location / {
+                  try_files $uri $uri/ /index.php?$args;
+              }
+              
+              location ~ \.php$ {
+                  # 🔑 Render resolve o fastcgi_pass para o nome do serviço PHP
+                  fastcgi_pass php-fpm:9000; 
+                  fastcgi_index index.php;
+                  include fastcgi_params;
+                  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                  fastcgi_param PATH_INFO $fastcgi_path_info;
+              }
+          }
+    
+    # Assegura que o serviço PHP-FPM esteja rodando antes de iniciar o Nginx
+    dependsOn:
+      - php-fpm
