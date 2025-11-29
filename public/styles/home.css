@@ -43,17 +43,3 @@
     margin: 0;
     padding: 0;
 }
-
-.left, .right {
-    width: 48%;
-}
-
-@media (max-width: 600px) {
-    .left, .right {
-        width: 100%;
-    }
-
-    .container-table {
-        gap: 50px;
-    }
-}

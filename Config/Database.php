@@ -7,15 +7,15 @@ use mysqli;
 class Database {
     private const HOST = "db";
     private const USER = "root";
-    private const PASS = "myfirstpassword";
     private const DATABASE = "real_state";
     private const PORT = 3306;
 
     public static function connect():mysqli {
+        $PASS = getenv("MYSQL_ROOT_PASSWORD");
         $database = new mysqli(
             self::HOST,
             self::USER,
-            self::PASS,
+            $PASS,
             self::DATABASE,
             self::PORT
         );
