@@ -20,6 +20,10 @@
 
     $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
+    if ($requestUri != '/') {
+        $requestUri = rtrim($requestUri, '/');
+    }
+
     if (!in_array($requestUri, $publicRoutes) && !Controller::isAuthenticated()) {
         header("Location: /login"); 
         exit;

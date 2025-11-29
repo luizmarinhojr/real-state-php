@@ -18,3 +18,42 @@
 .no-margin {
     margin: 0;
 }
+
+.container-table {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: var(--default-width-screen);
+    padding: 20px 20px;
+    align-items: center;
+}
+
+.day-month {
+    font-size: 2.7rem;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.dw {
+    font-size: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+.left, .right {
+    width: 48%;
+}
+
+@media (max-width: 600px) {
+    .left, .right {
+        width: 100%;
+    }
+
+    .container-table {
+        gap: 50px;
+    }
+}

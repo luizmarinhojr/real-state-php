@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/variables.css">
     <link rel="stylesheet" href="styles/home.css">
-    <link rel="stylesheet" href="styles/table.css">
+    <link rel="stylesheet" href="styles/home-table.css">
     <link rel="stylesheet" href="styles/header.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,16 +17,13 @@
     <?php include VIEW . "components/header.php"; ?>
     <?php include VIEW . "components/flash_message.php" ?>
     <main class="fade-in-animation" id="main">
-        <div class="container-fluid">
-            <div class="container">
-                <h1>Bem-vindo a <span style="color: var(--primary-color);">BROKER</span></h1>
-            </div>
+        <div class="container-fluid" style="margin-top: 20px;">
+            <img style="border-radius: 15px;" src="/assets/home-banner.webp" alt="">
         </div>
 
-        <?php include VIEW . 'components/last_customers.php'; ?>
-        
         <div class="container-fluid">
             <div class="container">
+                <h2>O que gostaria de fazer hoje?</h2>
                 <div class="cards">
                     <div class="card">
                         <h2 class="no-margin">Listar Clientes</h2>

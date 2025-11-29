@@ -15,6 +15,10 @@ final class HomeController
     final public function home() 
     {
         $customers = $this->homeUsecase->lastAddedCustomers(null);
+        $dateNow = new \DateTime();
+        $dayOfWeek = $dateNow->format("l");
+        $day = $dateNow->format('d');
+        $month = $dateNow->format("F");
         require_once VIEW . 'pages/home.php';
     }
 }

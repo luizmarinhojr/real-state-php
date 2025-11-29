@@ -31,6 +31,7 @@ header {
 .menu-user {
     margin-left: 10px;
     display: flex;
+    width: 200px;
     align-items: center;
     background-color: var(--primary-color);
     border-radius: 15px;
@@ -42,20 +43,26 @@ header {
     display: flex;
     gap: 10px;
     align-items: center;
+    color: white;
 }
 
-#menu-popup {
+.hello-user {
+    color: white !important;
+}
+
+.menu-popup {
     display: none;
     border-radius: 15px;
     position: absolute;
     top: 100%;
-    right: 20%;
+    right: 0%;
+    width: 200px;
     background-color: white;
     color: black;
     z-index: 10;
 }
 
-.visible {
+.menu-popup.visible {
     display: flex;
 }
 
