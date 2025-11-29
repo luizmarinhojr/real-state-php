@@ -9,9 +9,6 @@
     define('ROOT_PATH', dirname(__DIR__) . '/');
     define('VIEW', ROOT_PATH . '/App/view/');
 
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
-
     $publicRoutes = [
         '/login',
         '/cadastrar',
