@@ -33,6 +33,10 @@
         case '/login':
             Controller::initAuth()->signin();
             break;
+
+        case '/logout':
+            Controller::initAuth()->logout();
+            break;
         
         case '/cadastrar':
             Controller::initAuth()->signup();

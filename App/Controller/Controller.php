@@ -12,7 +12,10 @@ final class Controller {
     }
 
     public static function initHome() {
-        return new \App\Controller\HomeController();
+        $db = \Config\Database::connect();
+        $customerRepo = new \App\Repository\CustomerRepository($db);
+        $usecase = new \App\Usecase\HomeUsecase($customerRepo);
+        return new \App\Controller\HomeController($usecase);
     }
 
     public static function initAuth() {

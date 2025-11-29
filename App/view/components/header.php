@@ -10,7 +10,15 @@
                 <ul class="menu">
                     <li class="item-menu"><a href="/">Início</a></li>
                     <li class="item-menu"><a href="/clientes">Clientes</a></li>
-                    <li class="menu-user"><a>Olá, <?= $_SESSION['user_first_name'] ?><img src="/assets/user-svg-icon.svg" width="25px" /> </a></li>
+                    <li id="menu-user" class="menu-user">
+                        <a>Olá, <?= $_SESSION['user_first_name'] ?><img src="/assets/user-svg-icon.svg" width="25px" /> </a>
+                        <div id="menu-popup" class="">
+                            <ul class="menu-items">
+                                <li class="item-menu"><a href="#">Meu perfil</a></li>
+                                <li class="item-menu"><a href="#">Sair</a></li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </nav>
         </div>

@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/variables.css">
     <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" href="styles/table.css">
+    <link rel="stylesheet" href="styles/header.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -20,6 +22,8 @@
                 <h1>Bem-vindo a <span style="color: var(--primary-color);">BROKER</span></h1>
             </div>
         </div>
+
+        <?php include VIEW . 'components/last_customers.php'; ?>
         
         <div class="container-fluid">
             <div class="container">
@@ -33,16 +37,6 @@
                         <h2 class="no-margin">Cadastrar Clientes</h2>
                         <p>Cadastrar novos clientes</p>
                         <a class="btn-actions info" href="clientes/cadastrar">Acessar</a>
-                    </div>
-                    <div class="card">
-                        <h2 class="no-margin">Listar Clientes</h2>
-                        <p>Buscar e listar clientes</p>
-                        <a class="btn-actions info" href="">Acessar</a>
-                    </div>
-                    <div class="card">
-                        <h2 class="no-margin">Listar Clientes</h2>
-                        <p>Buscar e listar clientes</p>
-                        <a class="btn-actions info" href="">Acessar</a>
                     </div>
                 </div>
             </div>

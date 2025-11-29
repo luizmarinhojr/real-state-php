@@ -199,6 +199,48 @@ class CustomerRepository {
         
     }
 
+    public function lastAddedCustomers(?int $limit = 5): ?array {
+        $query = 'SELECT c.first_name, c.last_name, c.cellphone, c.email, a.neighborhood, a.city 
+                FROM customers c 
+                LEFT JOIN addresses a ON c.id = a.id_customer
+                WHERE c.active = true 
+                ORDER BY COALESCE(c.modified_at, c.created_at) DESC
+                LIMIT ?';
+        $stmt = $this->db->prepare($query);
+        if (!$stmt) {
+            throw new Exception("Falha na preparação da query: " . $this->db->error);
+        }
+        if ($limit) {
+            $success = $stmt->bind_param("i", $limit);
+            if (!$success) {
+                throw new Exception("Erro ao ligar parâmetro: " . $stmt->error);
+            }
+        } else {
+            $number = 3;
+            $success = $stmt->bind_param("i", $number);
+            if (!$success) {
+                throw new Exception("Erro ao ligar parâmetro: " . $stmt->error);
+            }
+        }
+        
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        $this->db->close();
+        if (!empty($result)) {
+            $customers = [];
+            foreach ($result as $row) {
+                $address = new AddressDtoResponse(null, null,null,null,$row['neighborhood'], $row['city']);
+                $customer = new CustomerDtoResponse(null, $row['first_name'], $row['last_name'], null, null, 
+                            $row['email'], $row['cellphone'], $address, null);
+                $customers[] = $customer;
+            }
+            
+            return $customers;
+        }
+        return null;
+    }
+
     final public function beginTransaction(): bool {
         return $this->db->begin_transaction();
     }

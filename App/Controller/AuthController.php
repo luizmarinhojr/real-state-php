@@ -79,6 +79,24 @@ final class AuthController
         require_once VIEW . 'pages/signup.php';
     }
 
+    public final function logout() {
+        // Limpa todas as variáveis de sessão
+        $_SESSION = []; 
+        
+        // Destrói a sessão (no servidor)
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+        session_destroy();
+        
+        header("Location: /login");
+        exit;
+    }
+
     private function getRequiredPostField(string $fieldName): string {
         if (!isset($_POST[$fieldName]) || trim($_POST[$fieldName]) === '') {
             throw new Exception("O campo '{$fieldName}' é obrigatório e não foi preenchido.", 400);
