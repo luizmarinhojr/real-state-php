@@ -32,7 +32,6 @@ Um sistema simples e robusto para gerenciamento de clientes do setor imobiliári
 - **Infraestrutura**:
   - **Docker** e **Docker Compose**: Para um ambiente de desenvolvimento containerizado e consistente.
   - **Nginx**: Como servidor web.
-  - **Render**: Configurado para deploy contínuo através do `render.yaml`.
 
 ---
 
