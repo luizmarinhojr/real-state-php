@@ -83,4 +83,4 @@ O projeto é organizado de forma a separar as responsabilidades, facilitando a m
 
 ## 📄 Licença
 
-Este projeto é distribuído sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
+Este projeto é distribuído sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes..
