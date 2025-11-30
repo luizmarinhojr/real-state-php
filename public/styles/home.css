@@ -43,3 +43,9 @@
     margin: 0;
     padding: 0;
 }
+
+@media (max-width: 1600px) {
+    .banner {
+        display: none;
+    }
+}

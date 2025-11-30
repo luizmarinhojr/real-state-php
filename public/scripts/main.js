@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', function() {
     main.classList.add('loaded');
 });
 
-document.querySelectorAll('.item-menu').forEach(itemMenu => {
+document.querySelectorAll('.item-menu-desktop').forEach(itemMenu => {
     
     itemMenu.addEventListener('mouseenter', () => {
-        const popup = itemMenu.querySelector('.menu-popup'); 
+        const popup = itemMenu.querySelector('.menu-desktop-popup'); 
     
         if (popup) {
             popup.classList.add('visible');
@@ -15,10 +15,15 @@ document.querySelectorAll('.item-menu').forEach(itemMenu => {
     });
 
     itemMenu.addEventListener('mouseleave', () => {
-        const popup = itemMenu.querySelector('.menu-popup');
+        const popup = itemMenu.querySelector('.menu-desktop-popup');
         
         if (popup) {
             popup.classList.remove('visible');
         }
     });
+});
+
+document.getElementById('menu-mobile-icon').addEventListener('click', () => {
+    sidebar = document.getElementById('sidebar-mobile');
+    sidebar.classList.toggle('visible');
 });

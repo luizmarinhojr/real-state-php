@@ -17,7 +17,7 @@
     <?php include VIEW . "components/header.php"; ?>
     <?php include VIEW . "components/flash_message.php" ?>
     <main class="fade-in-animation" id="main">
-        <div class="container-fluid" style="margin-top: 20px;">
+        <div class="container-fluid banner" style="margin-top: 20px;">
             <img style="border-radius: 15px;" src="/assets/home-banner.webp" alt="">
         </div>
 
